@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Appolo Public Schoool</title>
+<link href="favicon.ico" rel="shortcut icon" type="x-image">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/custome.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Poppins:300,400,500,600,700|Raleway:300,400,500,600,700" rel="stylesheet">
+<link rel="stylesheet" href="toastr/toastr.min.css"><style>.err-bd { border: 1px solid #c21c20 !important; } </style>
+</head>
+<body>
+
+<div class="floating-form float_formw" id="contact_form">
+    <h4 class="form_head_1">Enquire With Us</h4>
+	<button class="close_btn_1 contact-opener">X</button>
+    <div id="contact_body">
+		<div class="contact-form">
+				<form name="enqForm" id="SideContact-us" action="controllers/doEnq.php" accept-charset="utf-8" autocomplete="off" enctype="multipart/form-data" method="POST" class="contact-form">
+                <input type="hidden" name="enq_type" value="SideContact-us">
+           		<input type="hidden" name="pagelink" value="news-events.html">
+				<div class="form-group">
+                    <input type="text" id="SideContact-us-name" name="name_sidecontact_us" pattern="(?=.*[A-Za-z])[A-Za-z\s]*" required="required" class="enqur_form1" placeholder="Name*" />
+				</div>
+				<div class="form-group">
+                    <input type="email" id="SideContact-us-email" name="email_sidecontact_us" class="enqur_form1" required="required" placeholder="Email Address*" />
+				</div>
+				<div class="form-group">
+                    <input type="number" id="SideContact-us-contact" name="contact_sidecontact_us" class="enqur_form1" required="required" placeholder="Contact No*" />
+				</div>
+				<div class="form-group">
+                    <textarea name="message_sidecontact_us" id="SideContact-us-message" class="enqur_form1 textarea"  required="required"  placeholder="Message*"></textarea>
+				</div>
+				<div class="form-group">
+                    <button class="g-recaptcha banner_btn2" data-sitekey="6LcxrdYmAAAAAKI2wq9VxJdefXSEeSKwMNpbFiQo" data-callback='onSubmit1' data-action='submit'>Send Message</button>
+				</div>
+				<div class="clear"></div>
+			</form>
+		</div>
+    </div>
+</div>
+<div class="contact-opener form_open_b"><span>Admissions Open 2024-25</span></div>
+
+<div class="main_banner">
+	<header class="sub_navbar1">
+		<header class="sub_navbar2">
+			<div class="container">
+				<ul class="header_nav1">
+					<li><i class="fa fa-envelope-o"></i>appolopublicsch@gmail.com</li>
+					<li><i class="fa fa-phone"></i>+91 80 2669 8908/09 / +91 8792539589</li>
+				</ul>
+				<ul class="header_nav2">
+					<li><a href="contact-us.html">Contact Us</a></li>
+				</ul>
+			</div>
+		</header>
+		<header class="sub_navbar3">
+			<nav class="navbar navbar-default bootsnav" data-spy="affix" data-offset-top="60">
+				<div class="container">      
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu"><i class="fa fa-bars"></i></button>
+						<a class="navbar-brand" href="index.html"><img src="images/logo.png" class="logo_mwidth" alt=""></a>
+					</div>
+					<div class="collapse navbar-collapse" id="navbar-menu">
+						<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">         
+							<li><a href="index.html">Home</a></li>
+							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >About Us<i class="fa fa-caret-down"></i></a>
+							  <ul class="dropdown-menu pull-right">
+									<li><a href="about-us.html">Overview</a></li>
+									<li><a href="mission-vision.html">Our Vision / Mission</a></li>
+									<li><a href="admission-procedure.html">Admission Procedure</a></li>
+								</ul>
+							</li>  
+							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >Messages<i class="fa fa-caret-down"></i></a>
+							  <ul class="dropdown-menu pull-right">
+									<li><a href="chairmans-message.html">Chairperson Message</a></li>
+									<li><a href="vice-chairmans-message.html">Vice Chairperson Message</a></li>
+									<li><a href="principals-message.html">Principal's Message</a></li>
+									<li><a href="trustees-message.html">Trustee's Message</a></li>
+								</ul>
+							</li>  
+							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >Academics <i class="fa fa-caret-down"></i></a>
+							  <ul class="dropdown-menu pull-right">
+									<li><a href="curriculum.html">Curriculum</a></li>
+									<li><a href="co-curricular-activities.html">Co-Curricular Activities</a></li>
+									<li><a href="school-timings.html">School Timings</a></li>
+									<li><a href="academic-calender.html">Academic Calender</a></li>
+									<li><a href="holiday-list.html">List of Holidays</a></li>
+								</ul>
+							</li> 
+							<li><a href="facilities.html">Facilities</a></li>
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >Gallery <i class="fa fa-caret-down"></i></a>
+<ul class="dropdown-menu pull-right">
+									<li><a href="gallery-2023-24.html">2023-24</a></li> 
+									<li><a href="gallery-2022-23.html">2022-23</a></li>
+								</ul>
+							</li>
+                            <li><a href="news-events.html">News & Events</a></li>
+											   
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div>   
+			</nav>
+		</header>
+	</header>
+	<div class="sub_banner1n">
+    <div class="container">
+       <marquee class="scrolling_text">
+						<h3>"Admissions Open 2024-25"</h3>
+					</marquee> 
+     </div>
+    </div>
+    
+    <div class="clearfix"></div>
+	<div class="sub_banner2">
+		<div class="container"> 
+			<h3>News and Events</h3>
+			<ul class="banner_nav1">
+			<li><a href="index.html">Home</a></li>
+			<li><span>-</span></li>
+			<li>News and Events</li></ul>
+		</div>
+	</div>
+</div>
+
+<div class="sub_featur2">
+	<div class="container">
+		<h2 class="main_headr1 animated wow slideInUp" data-wow-duration="1s">Tentative Event Calender <span>AY 2023-24</span></h2>
+		 <span class="border_line  text-left  animated wow slideInUp"></span>
+		<div class="leader_wrap">
+		 
+				<div class="table-responsive">
+  <table class="table table-striped CustomeTable table-bordered"> 
+  
+  <tr>
+    <td colspan="4" valign="top"><p><strong>TERM - I</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>SL. NO.</strong></p></td>
+    <td width="272" valign="top"><p><strong>DATE</strong></p></td>
+    <td width="275" valign="top"><p><strong>DAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>EVENT</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>MAY</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>1</strong><strong> </strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p align="left"><strong>MAY 16TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>TUESDAY</strong></p></td>
+    <td width="464" valign="top"><p align="left"><strong>PARENTS'    ORIENTATION (CLASS 1 -    9.00 am-9.30 am</strong><br />
+      <strong>CLASS 2 -    9.45 am-10.15 am</strong><br />
+      <strong>CLASS 3 - 10.30 am-11.00 am</strong><br />
+      <strong>CLASS 4 - 11.15 am-12.00 pm</strong><br />
+      <strong>CLASS 5 - 12.15    am-12.45 pm (VENUE    - PRIMARY BLDG AUDITORIUM)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>2</strong><strong> </strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p align="left"><strong>MAY 17TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>WEDNESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>PARENTS'    ORIENTATION (CLASS 6 -    9.00 am-9.30 am</strong><br />
+      <strong>CLASS 7 -    9.45 am-10.15 am</strong><br />
+      <strong>CLASS 8 - 10.30 am-11.00 am</strong><br />
+      <strong>CLASS 9 &amp; 10 -    11.15 am-11.45 am) (VENUE - PRIMARY    BLDG AUDITORIUM)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>3</strong><strong> </strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>MAY 19TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SCHOOL</strong><strong> </strong><strong>RE-OPENS</strong><br />
+      <strong>(CLASS 9 &amp; 10)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>4</strong><strong> </strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>MAY 26TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>MONDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SCHOOL</strong><strong> </strong><strong>RE-OPENS</strong><br />
+      <strong>(CLASS 1-8)</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>JUNE</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>5</strong><strong> </strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JUNE 3RD</strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>BICYCLE DAY</strong><strong> </strong><br />
+      <strong>(CLASS 8, 9 &amp;    10)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>6</strong><strong> </strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left"><strong>JUNE 5TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>MONDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>WORLD    ENVIRONMENT</strong><strong> DAY </strong><strong>GREEN DAY - (CLASS 1 &amp; 2)</strong><br />
+      <strong>THEME-RELATED DRAWING &amp;    COLOURING - (CLASS    3 &amp; 4) SOWING SEEDS/SAPLINGS - (CLASS 5, 6, 7 &amp;    8)</strong><br />
+      <strong>STREET PLAY - (CLASS    9 &amp; 10)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>7</strong><strong> </strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JUNE 10TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>STUDENT COUNCIL ELECTION DAY</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>8</strong><strong> </strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JUNE 12TH-JUN 16TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>MONDAY-FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>UNIT TEST - I</strong><br />
+      <strong>CLASS 9 &amp; 10</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>9</strong><strong> </strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left"><strong>JUNE 21ST</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>WEDNESDAY</strong></p></td>
+    <td width="464" valign="top"><p align="left"><strong>INTERNATIONAL    YOGA DAY </strong><strong>CELEBRATION</strong><strong> </strong><strong>WITH</strong><strong> </strong><strong>YOGA </strong><strong>PERFORMANCES</strong><br />
+      <strong>(CLASS 3-10)</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>JULY</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>10</strong></p></td>
+    <td width="272" valign="top"><p><strong>JULY 1ST</strong><strong> </strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>UNIT TEST - I    PTM</strong><strong> </strong><br />
+      <strong>CLASS 9 &amp; 10</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>11</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JULY 3RD-JULY 6TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>MONDAY-THURSDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>UNIT TEST - I</strong><br />
+      <strong>CLASS 1-5</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>12</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JULY 3RD-JULY 8TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>MONDAY-SATURDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>UNIT TEST - I</strong><br />
+      <strong>CLASS 6-8</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>13</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JULY 12TH-JULY 16TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>WEDNESDAY-SUNDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>CLASS 10 TRIP</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>14</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JULY 14TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>JANAPADA LOKA VISIT</strong><br />
+      <strong>(CLASS 5)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>15</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JULY 17TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>MONDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>PLANETARIUM </strong><strong>VISIT</strong><br />
+      <strong>(CLASS 6)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>16</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JULY 18TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>TUESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>VIDHANA SOUDHA VISIT</strong><br />
+      <strong>(CLASS 7)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>17</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JULY 19TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>WEDNESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>ISRO VISIT</strong><br />
+      <strong>CLASS (8)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>18</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left"><strong>JULY 20TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>THURSDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>FACTORY VISIT/VISHWESHWARIAH </strong><strong>INSTITUTE &amp; TECHNOLOGICAL MUSEUM</strong><br />
+      <strong>CLASS (9)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>19</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JULY 22ND</strong><strong> </strong><br />
+      <strong>SATURDAY</strong><strong> </strong></p></td>
+    <td width="275" valign="top"><p><strong>UNIT TEST    - I PTM</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>CLASS 1-8</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>20</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JULY 28TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>INVESTITURE</strong><strong> </strong><strong>CEREMONY</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>AUGUST</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>21</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p align="left"><strong>AUGUST 7TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>MONDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SOAPBOX </strong><strong>- 1 LITERARY</strong><br />
+      <strong>(CLASS 1-5) </strong><strong>POETRY RECITATION, PICK AND SPEAK, PICTURE COMPSITION</strong><br />
+      <strong>(CLASS</strong><strong> </strong><strong>6-10)</strong><strong> </strong><strong>ELOCUTION, POETRY    COMPOSITION, ESSAY</strong><br />
+      <strong>COMPETITION</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>22</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p align="left"><strong>AUGUST 8TH &amp;    9TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>TUESDAY</strong><strong> </strong><strong>&amp; WEDNESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SOAPBOX </strong><strong>- 1 CULTURAL</strong><br />
+      <strong>(CLASS 1-5) SOLO </strong><strong>SINGING COMPETITION, SOLO DANCE COMPETITION (CLASS 6-10) SOLO SINGING COMPETITION,    GROUP DANCE COMPETITION (6-10    MEMBERS), MIME</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>23</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left"><strong>AUGUST 10TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>THURSDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SOAPBOX </strong><strong>- 1 QUIZ</strong><br />
+      <strong>(CLASS 1-5)    GK QUIZ</strong><br />
+      <strong>(CLASS 6-10)    GK QUIZ, REBUS,    SUDOKU, RUBRIC CUBE</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>24</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p align="left"><strong>AUGUST 11TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SOAPBOX </strong><strong>- 1 CREATIVITY</strong><br />
+      <strong>(CLASS 1 &amp; 2) CLAY MODELING</strong><br />
+      <strong>(3 &amp; 4) DRAWING AND COLOURING</strong><br />
+      <strong>(CLASS 5-10) WORKING </strong><strong>MODEL MAKING, THEME-BASED PPTs, PAINTING,    ORIGAMI, FRUIT &amp; VEG CARVINGS, IKEBANA,    HANDPAINTING, HAIRSTYLE, RANGOLI</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>25</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>AUGUST 14TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>MONDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>INDEPENDENCE</strong><strong> </strong><strong>DAY</strong><strong> </strong><strong>SPECIAL ASSEMBLY</strong><br />
+      <strong>(CLASS 1-4)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>26</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>AUGUST 15TH</strong><strong> </strong></p></td>
+    <td width="275" valign="top"><p><strong>TUESDAY</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>INDEPENDENCE</strong><strong> </strong><strong>DAY</strong><strong> </strong><strong>CELEBRATION</strong><strong> </strong><br />
+      <strong>(CLASS 5-10)</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>SEPTEMBER</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>27</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>SEPTEMBER</strong><strong> </strong><strong>5TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>TUESDAY</strong></p></td>
+    <td width="464" valign="top"><p align="left"><strong>TEACHERS'</strong><strong> </strong><strong>DAY</strong><strong> </strong><strong>CELEBRATION</strong><strong> </strong><br />
+      <strong>PROGRAMMES</strong><strong> </strong><strong>BY CLASS 10</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>28</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>SEPTEMBER</strong><strong> </strong><strong>9TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>PARENTS'</strong><strong> </strong><strong>DAY CELEBRATION</strong><strong> </strong><br />
+      <strong>(CLASS 1 &amp; 2)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>29</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p align="left"><strong>SEPTEMBER</strong><strong> </strong><strong>15TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p align="left">&nbsp;</p>
+      <p><strong>FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>GANESH CHATURTHI </strong><strong>CELEBRATION </strong><strong>COLOURING - (CLASS 1 &amp;    2)</strong><br />
+      <strong>CLAY MODELLING - (CLASS 3 &amp; 4) GANESHA LEAF    ART - (CLASS 5)</strong><br />
+      <strong>GANESHA MAKING WITH DIYAS - (CLASS 6 &amp; 7)</strong><br />
+      <strong>GANESHA MAKING    WITH COCONUT SHELLS    - (CLASS 8, 9 &amp;    10)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>30</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>SEP 20TH-OCT 3RD</strong></p></td>
+    <td width="275" valign="top"><p><strong>WEDNESDAY-TUESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>MID-TERM</strong><strong> </strong><strong>EXAMINATIONS</strong><br />
+      <strong>CLASS 9 &amp; 10</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>31</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>SEP 30TH-OCT 13TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY-FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>MID-TERM</strong><strong> </strong><strong>EXAMINATIONS</strong><br />
+      <strong>CLASS 6-8</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>OCTOBER</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>32</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>OCT 5TH-OCT 13TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>THURSDAY-FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>MID-TERM</strong><strong> </strong><strong>EXAMINATIONS</strong><br />
+      <strong>CLASS 3-5</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>33</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>OCT 6TH-OCT 13TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY-FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>MID-TERM</strong><strong> </strong><strong>EXAMINATIONS</strong><br />
+      <strong>CLASS 1 &amp; 2</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>TERM - II</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>SL. NO.</strong></p></td>
+    <td width="272" valign="top"><p><strong>DATE</strong></p></td>
+    <td width="275" valign="top"><p><strong>DAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>EVENT</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p align="left">&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>34</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left"><strong>OCTOBER 25TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>WEDNESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SCHOOL    RE-OPENS FOR TERM - II - (CLASS 1-10) DASARA THEME    ESSAY COMPETITION - (CLASS 3-5)</strong><br />
+      <strong>DASARA THEME PAINTING COMPETITION    - (CLASS 6 &amp; 7) DASARA    THEME COLLAGE MAKING    COMPETITION - (CLASS    8-10)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>35</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left"><strong>OCTOBER 31ST</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>TUESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>EXPO 23-24</strong><br />
+      <strong>(CLASS 3-10)</strong><br />
+      <strong>(LITERARY,</strong><strong> </strong><strong>HERITAGE,</strong><strong> </strong><strong>MATH,</strong><strong> </strong><strong>SCIENCE, TECH,    ART &amp; CRAFT)</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>NOVEMBER</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>36</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>NOV    4TH</strong><strong> </strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>MID-TERM</strong><strong> </strong><strong>PTM</strong><strong> </strong><br />
+      <strong>CLASS 6-10</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>37</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>NOV 6TH-NOV 10TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>MONDAY-FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>UNIT TEST - II</strong><br />
+      <strong>CLASS 10</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>38</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>NOV    11TH</strong><strong> </strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>MID-TERM</strong><strong> </strong><strong>PTM</strong><strong> </strong><br />
+      <strong>CLASS 1-5</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>39</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>NOV 15TH</strong><strong> </strong></p></td>
+    <td width="275" valign="top"><p><strong>WEDNESDAY</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>CHILDREN'S</strong><strong> </strong><strong>DAY CELEBRATION</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>40</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>NOV    25TH</strong><strong> </strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>UNIT TEST - II    PTM</strong><strong> </strong><br />
+      <strong>CLASS 10</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>41</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left"><strong>NOVEMBER </strong><strong>25TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>SATURDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>RAJYOTSAVA </strong><strong>SPECIAL ASSEMBLY    (CLASS 1 &amp; 2)</strong><br />
+      <strong>(CLASS 7)</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>DECEMBER</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>42</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>DEC 1ST-DEC 12TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY-TUESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>PREPARATORY</strong><strong> </strong><strong>EXAMINATIONS</strong><strong> </strong><br />
+      <strong>CLASS 10</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>43</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>DEC 1ST-DEC 7TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY-THURSDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>UNIT TEST - II</strong><br />
+      <strong>CLASS 1-9</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>44</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>DECEMBER</strong><strong> </strong><strong>23RD</strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SCHOOL DAY</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>JANUARY</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>45</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JANUARY 2ND</strong></p></td>
+    <td width="275" valign="top"><p><strong>TUESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SCHOOL</strong><strong> </strong><strong>RE-OPENS</strong><br />
+      <strong>(CLASS 1-10)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>46</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JANUARY 6TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>UNIT TEST - II    PTM</strong><br />
+      <strong>(CLASS 1-4)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>47</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JANUARY 12TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SPECIAL ASSEMBLY - (CLASS 1 &amp; 2)</strong><br />
+      <strong>KITE</strong><strong> </strong><strong>MAKING AND PAPER HANGINGS ACTIVITY - (CLASS    1-9)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>48</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JANUARY 15TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>MONDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>POLICE STATION VISIT</strong><br />
+      <strong>(CLASS 1)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>49</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JANUARY 16TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>TUESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>POST OFFICE VISIT</strong><br />
+      <strong>(CLASS 2)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>50</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JANUARY 17TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>WEDNESDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>FIRE STATION VISIT</strong><br />
+      <strong>(CLASS 3)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>51</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JANUARY 18TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>THURSDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>PRANI </strong><strong>VISIT</strong><br />
+      <strong>(CLASS 4)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>52</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>JANUARY 20TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>UNIT TEST - II    PTM</strong><br />
+      <strong>(CLASS 5-9)</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top"><p align="left">&nbsp;</p>
+      <p align="left"><strong>JANUARY 2ND/3RD WEEK</strong></p></td>
+    <td colspan="2" valign="top"><p align="left"><strong>CLASS 8 ANNUAL EXAMINATIONS    (ALONG WITH CLASS 9 ANNUAL EXAM) CLASS 9 ANNUAL EXAMINATIONS (AS PER THE    COUNCIL'S TIMETABLE)</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>FEBRUARY</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>53</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>FEBRUARY 9TH</strong><strong> </strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>SARASWATHI PUJA (DEPENDS ON KISA EXAMS)</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>54</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>FEBRUARY 10TH</strong><strong> </strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>VALEDICTORY</strong><strong> </strong><strong>FUNCTION (DEPENDS ON KISA EXAMS)</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>55</strong></p></td>
+    <td width="272" valign="top"><p align="right"><strong>FEBRUARY</strong><strong> </strong><strong>2ND/3RD WEEK</strong></p></td>
+    <td width="275" valign="top"><p><strong>HOLIDAYS</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>CLASS 8 GOING    TO 9</strong><strong> </strong><br />
+      <strong>CLASS 9 GOING TO 10</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>56</strong></p></td>
+    <td width="272" valign="top"><p align="left">&nbsp;</p>
+      <p align="left"><strong>FEBRUARY 24TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p>
+      <p><strong>SATURDAY</strong><strong> </strong></p></td>
+    <td width="464" valign="top"><p><strong>CLASS 8 GOING    TO 9</strong><strong> </strong><br />
+      <strong>CLASS 9 GOING    TO 10</strong><strong> </strong><br />
+      <strong>ANNUAL EXAMINATION RESULTS AND BOOKS    DISTRIBUTION</strong><strong> </strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>57</strong></p></td>
+    <td width="272" valign="top"><p align="right"><strong>MARCH 1ST-APRIL 11TH</strong></p></td>
+    <td width="275" valign="top"><p align="left">&nbsp;</p></td>
+    <td width="464" valign="top"><p><strong>CLASSES START    FOR CLASS 9 &amp; 10</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>MARCH</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>58</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>MARCH 16TH - 28TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>SATURDAY-THURSDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>ANNUAL</strong><strong> </strong><strong>EXAMINATIONS</strong><br />
+      <strong>CLASS 6 &amp; 7</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>59</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>MARCH 20TH - 28TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>WEDNESDAY-THURSDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>ANNUAL</strong><strong> </strong><strong>EXAMINATIONS</strong><br />
+      <strong>CLASS 3-5</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>60</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>MARCH 21ST - 28TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>THURSDAY-THURSDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>ANNUAL</strong><strong> </strong><strong>EXAMINATIONS</strong><br />
+      <strong>CLASS 1 &amp; 2</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>61</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>MARCH 29TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>SUMMER</strong><strong> </strong><strong>VACATION FOR STUDENTS</strong></p></td>
+  </tr>
+  <tr>
+    <td colspan="4" valign="top"><p><strong>APRIL</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>62</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>APRIL 10TH &amp;    11TH</strong></p></td>
+    <td width="275" valign="top"><p align="left"><strong>WEDNESDAY &amp;</strong><br />
+      <strong>THURSDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>RESULTS </strong><strong>&amp; BOOKS    DISTRIBUTION</strong><br />
+      <strong>(CLASS 1, 2, 3 &amp;    4)</strong></p></td>
+  </tr>
+  <tr>
+    <td width="169" valign="top"><p><strong>63</strong></p></td>
+    <td width="272" valign="top"><p align="left"><strong>APRIL 12TH &amp;    13TH</strong></p></td>
+    <td width="275" valign="top"><p><strong>FRIDAY &amp;    SATURDAY</strong></p></td>
+    <td width="464" valign="top"><p><strong>RESULTS </strong><strong>&amp; BOOKS    DISTRIBUTION</strong><br />
+      <strong>(CLASS 5, 6, 7 &amp;    8)</strong></p></td>
+  </tr>
+  </table></div>
+			 
+		</div>
+	</div>
+</div>
+
+<footer class="main_footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 col-sm-6 col-xs-12 animated wow slideInUp" data-wow-duration="1s">
+				<h4 class="footer_head">Quick Links</h4>
+				<ul class="footer_nav2">
+					<li><a href="index.html"><i class="fa fa-angle-right"></i> Home</a></li>
+					<li><a href="about-us.html"><i class="fa fa-angle-right"></i> About Us</a></li>
+					<li><a href="chairmans-message.html"><i class="fa fa-angle-right"></i> Messages</a></li>
+					<li><a href="curriculum.html"><i class="fa fa-angle-right"></i> Academics</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs-12 animated wow slideInUp" data-wow-duration="2s">
+				<h4 class="footer_head">&nbsp</h4>
+				<ul class="footer_nav2">
+					<li><a href="news-events.html"><i class="fa fa-angle-right"></i> News & Events</a></li>
+					<li><a href="facilities.html"><i class="fa fa-angle-right"></i> Facilities</a></li>
+					<li><a href="gallery-2022-23.html"><i class="fa fa-angle-right"></i> Gallery</a></li>
+					<li><a href="contact-us.html"><i class="fa fa-angle-right"></i> Contact Us</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs-12 animated wow slideInUp" data-wow-duration="1s">
+				<h4 class="footer_head">Contact Us</h4>
+				<ul class="footer_nav1">
+					<li><i class="fa fa-map-marker"></i># 320, 5th Cross, 5th Block, Banashankari,
+3rd Stage, 3rd Phase, Bengaluru-560085</li>
+					  <li><i class="fa fa-phone"></i>+91 80 2669 8908/09<br>+91 8792539589</li> 
+					  <li><i class="fa fa-envelope"></i>appolopublicsch@gmail.com</li>
+				</ul>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs-12 animated wow slideInUp" data-wow-duration="2s">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.7324382422685!2d77.55048051482149!3d12.92491069088659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb6ab8f59d27ee566!2sAppolo%20Public%20School!5e0!3m2!1sen!2sin!4v1639141357781!5m2!1sen!2sin" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<footer class="main_copyrt">
+	<div class="container">
+		<p class="main_parag1">© Copyright 2021 <span>Appolo Public School</span>. All Rights Reserved. </p>
+		<ul class="footer_nav3">
+			<li style="float:right"><a href="https://www.marswebsolution.com/">Design By : Mars Web Solutions</a></li>
+		</ul>
+	</div>
+</footer>
+
+<a href="#0" class="cd-top">Top</a>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/menubar.js"></script>
+<script src="js/counter.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/back-to-top.js"></script>
+<script src='js/wow.js'></script>
+<script>
+wow = new WOW(
+  {
+	animateClass: 'animated',
+	offset:       100,
+	callback:     function(box) {
+	  console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
+	}
+  }
+);
+wow.init();
+document.getElementById('moar').onclick = function() {
+  var section = document.createElement('section');
+  section.className = 'section--purple wow fadeInDown';
+  this.parentNode.insertBefore(section, this);
+};
+</script>
+
+
+<script src="https://www.google.com/recaptcha/api.js"  async defer></script>
+<script src="toastr/toastr.min.js"></script>
+<script>
+   function onSubmit1(token) {
+     //document.getElementById("demo-form").submit();
+	 contactvalidateForm1();
+   }
+ </script>
+ <script>
+    function contactvalidateForm1() 
+    {
+        var phonepatern = /^\d{10,12}$/;
+        var emailReg = /^([a-zA-Z0-9_\.\-])+\@(([0-9a-zA-Z\-])+\.)+([a-zA-Z0-9]{2,4})+$/; 
+        
+        var name = $('#SideContact-us-name').val();
+        var email = $('#SideContact-us-email').val();
+        var contact = $('#SideContact-us-contact').val();
+        var message = $('#SideContact-us-message').val();
+        //var img = $('#myfile').val();
+        //alert(destinations);
+        var els = document.getElementsByClassName('err-bd');
+        while (els[0]) {
+            els[0].classList.remove('err-bd')
+          }
+        
+        //var response = grecaptcha.getResponse(html_element_id2);	
+        if(name =='')
+        {
+            toastr.error("Please enter your name");
+            $('#SideContact-us-name').addClass("err-bd");
+            $('#SideContact-us-name').focus();
+        }
+        else if(email =='')
+        {
+            toastr.error("Please enter email");
+            $('#SideContact-us-email').addClass("err-bd");
+            $('#SideContact-us-email').focus();
+        }
+        else if(!emailReg.test(email)) {
+            toastr.error("Invalid email id");
+            $('#SideContact-us-email').addClass("err-bd");
+            $('#SideContact-us-email').focus();
+        }
+        else if(contact == ''){
+            toastr.error("Please enter mobile number");
+            $('#SideContact-us-contact').addClass("err-bd");
+            $('#SideContact-us-contact').focus();
+        }
+        else if(!phonepatern.test(contact)) {
+            toastr.error("Invalid phone number");
+            $('#SideContact-us-contact').addClass("err-bd");
+            $('#SideContact-us-contact').focus();
+        }
+        else if(message =='')
+        {
+            toastr.error("Please enter your message / requirement");
+            $('#SideContact-us-message').addClass("err-bd");
+            $('#SideContact-us-message').focus();
+        }
+        //else if(response.length == 0){
+            //toastr.error("You can't proceed! captcha validation failed.");
+        //}
+        else{
+            $('#SideContact-us').submit();
+            //document.getElementById("enq_form").submit();
+            return true;
+        }
+        return false;
+    }
+    </script>
+
+</body>
+</html>
