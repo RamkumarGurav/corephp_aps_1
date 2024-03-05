@@ -10,7 +10,6 @@ include("../controller/FinancialYear.php");
 include("../controller/Album.php");
 include("../controller/Gallery.php");
 
-
 include("../inc/header.php");
 include("../inc/leftnav.php");
 
@@ -60,6 +59,8 @@ include("../inc/leftnav.php");
                     <!-- select -->
                     <div class="form-group">
                       <label>Select Fiscal Year</label>
+
+
                       <?php if ($isAddMoreImagesPage) : ?>
                       <select class="form-control" id="year_id" name="year_id" required readonly>
                         <option value="<?= $yearData['id'] ?>"><?= $yearData['fiscal_year'] ?></option>
@@ -118,15 +119,23 @@ include("../inc/leftnav.php");
                         <div class="col-sm-4">
                           <!-- text input -->
                           <div class="form-group">
-                            <input type="text" name="album_image_name[]" class="form-control"
+                            <?php if (!empty($_SESSION['gallery_data']['name'])) : ?>
+                            <input type="text" name="album_image_name[]" id="album_image_name" class="form-control"
+                              value="<?= !empty($_SESSION['gallery_data']['name']) ? $_SESSION['gallery_data']['name'] : ""  ?>"
                               placeholder="Enter Image Name..." />
+                            <?php else : ?>
+                            <input type="text" name="album_image_name[]" id="album_image_name" class="form-control"
+                              placeholder="Enter Image Name..." />
+                            <?php endif; ?>
+
                           </div>
                         </div>
 
                         <div class="col-sm-6">
                           <div class="d-flex custom-file align-items-center">
-                            <input type="file" class="album_image1 custom-file-input" name="album_image[]" required />
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            <input type="file" class="album_image1 custom-file-input" name="album_image[]" required
+                              accept="image/png, image/jpeg,image/jpg" />
+                            <label class="custom-file-label" for="exampleInputFile">Choose image</label>
                           </div>
                         </div>
                         <div class="col-sm-1">
@@ -140,31 +149,70 @@ include("../inc/leftnav.php");
                           </button>
                         </div>
                       </div>
+
                     </div>
 
+                    <small class="text-muted mt-1 mb-2"> &#40; only
+                      PNG/JPEG/JPG image formats less than
+                      2MB
+                      are allowed &#41;</small>
                   </div>
-                  <div class="col-sm-12">
+                  <div class="col-sm-12 mt-2">
                     <div type="button" id="addImageButton" class="col-sm-12 border text-muted text-center rounded-pill">
                       Add New Line
                     </div>
+
                   </div>
                 </div>
                 <div>
                 </div>
 
 
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-sm-12">
                     <label class="form-check-label">Select Status</label>
                     <div class="form-group  ">
                       <div class="form-check mr-5">
-                        <input class="form-check-input" type="radio" name="status" required value="1">
+                        <input class="form-check-input" type="radio" name="status" required value="1" checked>
                         <label class=" form-check-label">Active</label>
                       </div>
                       <div class="form-check">
                         <input class="form-check-input" type="radio" name="status" required value="0">
                         <label class="form-check-label">Block</label>
                       </div>
+
+                    </div>
+                  </div>
+                </div> -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <!-- radio -->
+                    <label class="form-check-label">Select Status</label>
+                    <div class="form-group  ">
+                      <?php if (!empty($_SESSION['gallery_data'][0])) : ?>
+
+                      <div class="form-check mr-5">
+                        <input class="form-check-input" type="radio" name="status" required value="1"
+                          <?= $_SESSION['gallery_data'][0]['status'] === "1" ? "checked" : ""    ?>>
+                        <label class=" form-check-label">Active</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" required value="0"
+                          <?= $_SESSION['gallery_data'][0]['status'] === "0" ? "checked" : ""    ?>>
+                        <label class="form-check-label">Block</label>
+                      </div>
+
+
+                      <?php else : ?>
+                      <div class="form-check mr-5">
+                        <input class="form-check-input x" type="radio" name="status" required value="1" checked>
+                        <label class=" form-check-label">Active</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" required value="0">
+                        <label class="form-check-label">Block</label>
+                      </div>
+                      <?php endif; ?>
 
                     </div>
                   </div>
@@ -232,7 +280,7 @@ $(document).ready(function() {
     $(".imageUploadFields").append(clonedField);
     clonedField.find("input[type='text']").val("");
     clonedField.find("input[type='file']").val("");
-    clonedField.find(".custom-file-label").text("Choose file"); // Reset the label text
+    clonedField.find(".custom-file-label").text("Choose image"); // Reset the label text
     clonedField.find(".galleryImagePreviewContainer").empty(); // Clear the image preview
     clonedField.find(".delete-image-field").removeClass("d-none");
   });

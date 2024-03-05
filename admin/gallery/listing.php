@@ -1,5 +1,7 @@
 <?php
 session_start();
+$_SESSION['album_data'] = [];
+$_SESSION['gallery_data'] = [];
 if (!isset($_SESSION["user"])) {
   header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin");
   exit();
@@ -9,7 +11,6 @@ include("../controller/Login.php");
 include("../controller/FinancialYear.php");
 include("../controller/Album.php");
 include("../controller/Gallery.php");
-
 
 include("../inc/header.php");
 

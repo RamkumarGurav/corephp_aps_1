@@ -1,5 +1,8 @@
 <?php
+
 session_start();
+$_SESSION['album_data'] = [];
+$_SESSION['gallery_data'] = [];
 if (!isset($_SESSION["user"])) {
   header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin");
   exit();
@@ -10,7 +13,8 @@ if (!isset($_SESSION["user"])) {
 
 include "../controller/Login.php";
 include("../controller/FinancialYear.php");
-include "../controller/Album.php";
+include("../controller/Album.php");
+
 
 
 
@@ -91,26 +95,29 @@ include("../inc/leftnav.php");
               <table class="table table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th class="position-relative"># <input type="checkbox" class="all-albums-checkbox position-absolute"
-                        style="top:50%;left:50%;" onchange="selectAllAlbums(this)"></th>
-                    <th>Sl. No.</th>
-                    <th>album name</th>
-                    <th>cover image</th>
-                    <th>financial year</th>
+                    <th class=" position-relative"># <input type="checkbox"
+                        class="all-albums-checkbox position-absolute" style="top:50%;left:50%;"
+                        onchange="selectAllAlbums(this)"></th>
+                    <th class="align-middle text-center">Sl. No.</th>
+                    <th class="align-middle text-center">album name</th>
+                    <th class="align-middle text-center">cover image</th>
+                    <th class="align-middle text-center">financial year</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($albums as $index => $album) : ?>
                   <tr id="<?= $album['id'] ?>" data-sort-id="<?= $album['id'] ?>">
-                    <td class="position-relative px-4"><input type="checkbox" class="album-checkbox position-absolute"
-                        style="top:50%;left:50%;" value="<?php echo $album['id']; ?>"></td>
-                    <td><?php echo $index + 1; ?></td>
+                    <td class="align-middle text-center position-relative px-4"><input type="checkbox"
+                        class="album-checkbox position-absolute" style="top:50%;left:50%;"
+                        value="<?php echo $album['id']; ?>"></td>
+                    <td class="align-middle text-center"><?php echo $index + 1; ?></td>
 
-                    <td><a href="<?=
-                                        "http://localhost/xampp/MARS/appolopublicschool.com/admin/album/show.php?albumID={$album['id']}"
-                                        ?>"><u><?php echo $album['name']; ?></u></a></td>
-                    <td>
+                    <td class="align-middle text-left"><a href="<?=
+                                                                      "http://localhost/xampp/MARS/appolopublicschool.com/admin/album/show.php?albumID={$album['id']}"
+                                                                      ?>"><u><?php echo $album['name']; ?></u></a>
+                    </td>
+                    <td class="align-middle text-center">
                       <?php if (!empty($album['cover_image'])) : ?>
                       <img
                         src="<?php echo "../../uploads/album/{$album['fy_name']}/cover_images/{$album['cover_image']}"; ?>"
@@ -120,19 +127,20 @@ include("../inc/leftnav.php");
                       <?php endif; ?>
                     </td>
 
-                    <td><?php echo $album['fy_name'] ?></td>
-                    <td><?php echo $album['status'] == 1 ? 'Active' : 'Blocked'; ?></td>
+                    <td class="align-middle text-center"><?php echo $album['fy_name'] ?></td>
+                    <td class="align-middle text-center"><?php echo $album['status'] == 1 ? 'Active' : 'Blocked'; ?>
+                    </td>
                   </tr>
                   <?php endforeach; ?>
                 </tbody>
                 <tfoot>
                   <tr>
-                    <th>#</th>
-                    <th>Sl. No.</th>
-                    <th>album name</th>
-                    <th>cover image</th>
-                    <th>financial year</th>
-                    <th>Status</th>
+                    <th class="align-middle text-center">#</th>
+                    <th class="align-middle text-center">Sl. No.</th>
+                    <th class="align-middle text-center">album name</th>
+                    <th class="align-middle text-center">cover image</th>
+                    <th class="align-middle text-center">financial year</th>
+                    <th class="align-middle text-center">Status</th>
                   </tr>
                 </tfoot>
               </table>
@@ -149,31 +157,32 @@ include("../inc/leftnav.php");
               <table id="sortable" class="table table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th class="position-relative"># <input type="checkbox"
+                    <th class=" position-relative"># <input type="checkbox"
                         class="all-album-images-checkbox position-absolute" style="top:50%;left:50%;"
                         onchange="selectAllAlbums(this)"></th>
-                    <th>Sl. No.</th>
-                    <th>album name</th>
-                    <th>cover image</th>
-                    <th>Reorder Action</th>
+                    <th class="align-middle text-center">Sl. No.</th>
+                    <th class="align-middle text-center">album name</th>
+                    <th class="align-middle text-center">cover image</th>
+                    <th class="align-middle text-center">Reorder Action</th>
                     <!-- <th>album ID</th>
 
                     <th>album order</th> -->
-                    <th>financial year</th>
-                    <th>Status</th>
+                    <th class="align-middle text-center">financial year</th>
+                    <th class="align-middle text-center">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($albums as $index => $album) : ?>
                   <tr id="<?= $album['id'] ?>" data-sort-id="<?= $album['id'] ?>">
-                    <td class="position-relative px-4"><input type="checkbox" class="album-checkbox position-absolute"
-                        style="top:50%;left:50%;" value="<?php echo $album['id']; ?>"></td>
-                    <td><?php echo $index + 1; ?></td>
+                    <td class="align-middle text-center position-relative px-4"><input type="checkbox"
+                        class="album-checkbox position-absolute" style="top:50%;left:50%;"
+                        value="<?php echo $album['id']; ?>"></td>
+                    <td class="align-middle text-center"><?php echo $index + 1; ?></td>
 
-                    <td><a href="<?=
-                                        "http://localhost/xampp/MARS/appolopublicschool.com/admin/album/show.php?albumID={$album['id']}"
-                                        ?>"><u><?php echo $album['name']; ?></u></a></td>
-                    <td>
+                    <td class="align-middle text-left"><a href="<?=
+                                                                      "http://localhost/xampp/MARS/appolopublicschool.com/admin/album/show.php?albumID={$album['id']}"
+                                                                      ?>"><u><?php echo $album['name']; ?></u></a></td>
+                    <td class="align-middle text-center">
                       <?php if (!empty($album['cover_image'])) : ?>
                       <img
                         src="<?php echo "../../uploads/album/{$album['fy_name']}/cover_images/{$album['cover_image']}"; ?>"
@@ -182,27 +191,29 @@ include("../inc/leftnav.php");
                       Image Not Found
                       <?php endif; ?>
                     </td>
-                    <td align="center"><a href="javascript:;" class="sort"><i class="fa fa-fw fa-arrows-alt "></i></a>
+                    <td class="align-middle text-center"><a href="javascript:;" class="sort"><i
+                          class="fa fa-fw fa-arrows-alt "></i></a>
                       <!-- 
                     <td align="center"><?php echo $album['id'] ?></a>
                     <td align="center"><?php echo $album['album_order'] ?></a> -->
-                    <td><?php echo $album['fy_name'] ?></td>
-                    <td><?php echo $album['status'] == 1 ? 'Active' : 'Blocked'; ?></td>
+                    <td class="align-middle text-center"><?php echo $album['fy_name'] ?></td>
+                    <td class="align-middle text-center"><?php echo $album['status'] == 1 ? 'Active' : 'Blocked'; ?>
+                    </td>
                   </tr>
                   <?php endforeach; ?>
                 </tbody>
                 <tfoot>
                   <tr>
-                    <th>#</th>
-                    <th>Sl. No.</th>
-                    <th>album name</th>
-                    <th>cover image</th>
-                    <th>Reorder Action</th>
+                    <th class="align-middle text-center">#</th>
+                    <th class="align-middle text-center">Sl. No.</th>
+                    <th class="align-middle text-center">album name</th>
+                    <th class="align-middle text-center">cover image</th>
+                    <th class="align-middle text-center">Reorder Action</th>
                     <!-- <th>album ID</th>
 
                     <th>album order</th> -->
-                    <th>financial year</th>
-                    <th>Status</th>
+                    <th class="align-middle text-center">financial year</th>
+                    <th class="align-middle text-center">Status</th>
                   </tr>
                 </tfoot>
               </table>
@@ -316,6 +327,9 @@ $(document).ready(function(e) {
 <script>
 // --------------------------------------------------}
 var toastElementFE = $("#customToastFE");
+var numOfAlbums = "<?php echo $numOfAlbums;  ?>";
+// console.log(numOfAlbums);
+
 function getSelectedAlbums() {
   const selectedAlbums = [];
   document.querySelectorAll('.album-checkbox:checked').forEach(checkbox => {
@@ -347,33 +361,33 @@ function activateSelectedAlbums() {
         ids: selectedAlbums
       },
       function(data, status) {
-        
+
         if (status == "success") {
-            console.log(status);
-            // toastElementFE.removeClass("d-none");
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-success");
-              $("#customToastFEClose").after("successfully Activated");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
+          console.log(status);
+          // toastElementFE.removeClass("d-none");
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-success");
+            $("#customToastFEClose").after("successfully Activated");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
 
-          } else {
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-danger");
-              $("#customToastFEClose").after("Failed to Activate");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
-          }
+        } else {
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-danger");
+            $("#customToastFEClose").after("Failed to Activate");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
+        }
 
-        
+
       });
   } else {
     alert('Please select at least one album to activate.');
@@ -389,29 +403,29 @@ function blockSelectedAlbums() {
       },
       function(data, status) {
         if (status == "success") {
-            console.log(status);
-            // toastElementFE.removeClass("d-none");
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-success");
-              $("#customToastFEClose").after("successfully Blocked");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
+          console.log(status);
+          // toastElementFE.removeClass("d-none");
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-success");
+            $("#customToastFEClose").after("successfully Blocked");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
 
-          } else {
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-danger");
-              $("#customToastFEClose").after("Failed to Block");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
-          }
+        } else {
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-danger");
+            $("#customToastFEClose").after("Failed to Block");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
+        }
       });
   } else {
     alert('Please select at least one album to block.');
@@ -419,54 +433,107 @@ function blockSelectedAlbums() {
 }
 
 
+
+
+
 function deleteSelectedAlbums() {
   const selectedAlbums = getSelectedAlbums();
-  if (selectedAlbums.length > 0) {
-    // Show a confirmation dialog
-    if (confirm("Are you sure you want to delete selected albums?")) {
-      // User confirmed deletion, proceed with the deletion
-      $.post("../controller/Album.php?album_action=delete", {
-          ids: selectedAlbums
-        },
-        function(data, status) {
-          if (status == "success") {
-            console.log(status);
-            // toastElementFE.removeClass("d-none");
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-success");
-              $("#customToastFEClose").after("successfully Deleted");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
 
-          } else {
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-danger");
-              $("#customToastFEClose").after("Failed to Delete");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
-          }
-        }
-      );
+  if (selectedAlbums.length > 0) {
+
+    if (selectedAlbums.length == numOfAlbums) {
+      const proceed = prompt("type 'proceed to delete all', To proceed with deleting all selected albums:");
+      if (proceed === "proceed to delete all") {
+        // User confirmed deletion, proceed with the deletion
+        $.post("../controller/Album.php?album_action=delete", {
+            ids: selectedAlbums
+          },
+          function(data, status) {
+            if (status == "success") {
+              console.log(status);
+              // toastElementFE.removeClass("d-none");
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-success");
+                $("#customToastFEClose").after("successfully Deleted");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+
+            } else {
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-danger");
+                $("#customToastFEClose").after("Failed to Delete");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+            }
+          });
+      } else {
+
+        alert("Deletion canceled. You Didn't type correctly Try Again.");
+        // // Deselect the "Select All" checkbox
+
+        location.reload();
+
+      }
+
     } else {
-      // User cancelled deletion, deselect checkboxes
-      document.querySelectorAll('.album-checkbox:checked').forEach(checkbox => {
-        checkbox.checked = false;
-      });
-      // Deselect the "Select All" checkbox
-      document.querySelector('.all-albums-checkbox').checked = false;
+
+      if (confirm("Are you sure you want to delete selected albums?")) {
+        // Prompt user for secondary confirmation
+
+        // User confirmed deletion, proceed with the deletion
+        $.post("../controller/Album.php?album_action=delete", {
+            ids: selectedAlbums
+          },
+          function(data, status) {
+            if (status == "success") {
+              console.log(status);
+              // toastElementFE.removeClass("d-none");
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-success");
+                $("#customToastFEClose").after("successfully Deleted");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+
+            } else {
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-danger");
+                $("#customToastFEClose").after("Failed to Delete");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+            }
+          }
+        );
+
+      } else {
+        // Deselect the "Select All" checkbox
+
+        location.reload();
+
+      }
     }
   } else {
     alert('Please select at least one album  to delete.');
   }
 }
+
+
+
 
 function filterAlbumsByYear(select) {
   const yearId = select.value;

@@ -1,8 +1,8 @@
 <?php
 
 
-$path = str_replace("\\", "/", dirname(__DIR__));
-require_once $path . "/model/FinancialYearModel.php";
+$root_path = str_replace("\\", "/", dirname(dirname(__DIR__)));
+require_once $root_path . "/admin/model/FinancialYearModel.php";
 $base_url = "http://localhost/xampp/MARS/appolopublicschool.com";
 $current_path = $_SERVER['REQUEST_URI'];
 
@@ -20,6 +20,10 @@ class FinancialYear
   public function findAll()
   {
     return $this->model->findAll();
+  }
+  public function findAllActive()
+  {
+    return $this->model->findAllActive();
   }
 
   public function findOne($id)
@@ -116,12 +120,69 @@ class FinancialYear
   public function delete()
   {
     $ids = $_POST["ids"];
-    foreach ($ids as $id) {
-      $this->model->deleteById($id);
+
+
+    if (!empty($ids)) {
+      foreach ($ids as $id) {
+        // Retrieve album data to get the cover image filename
+        $yearData = $this->model->findOneByColumnName("id", $id);
+        if (
+          !empty($yearData)
+        ) {
+          // Delete the record from the album table
+          if ($this->model->deleteById($id)) {
+            // Check if the cover image exists and delete it from the uploads folder
+            global $root_path;
+            $root_uploads_folder = $root_path . "/uploads";
+            $fy_folder_path = $root_uploads_folder . "/album/{$yearData['fiscal_year']}";
+
+
+            if (file_exists($fy_folder_path)) {
+
+              if ($this->deleteFolderContents($fy_folder_path)) {
+                rmdir($fy_folder_path);
+              }; // Delete the image file
+            }
+          }
+        }
+      }
     }
-    $_SESSION["toast_message"] = "Sucessfully Deleted";
-    $_SESSION["toast_type"] = "alert-success";
-    exit();
+  }
+
+
+  function deleteFolderContents($folderPath)
+  {
+    // Check if the folder exists
+    if (!is_dir($folderPath)) {
+      return false;
+    }
+
+    // Get the list of files and directories inside the folder
+    $items = scandir($folderPath);
+
+    // Iterate through each item
+    foreach ($items as $item) {
+      // Skip "." and ".." special directories
+      if ($item == '.' || $item == '..') {
+        continue;
+      }
+
+      // Build the full path to the item
+      $itemPath = $folderPath . '/' . $item;
+
+      // Check if the item is a directory
+      if (is_dir($itemPath)) {
+        // If it's a directory, recursively delete its contents
+        $this->deleteFolderContents($itemPath);
+        // After deleting the contents, delete the directory itself
+        rmdir($itemPath);
+      } else {
+        // If it's a file, simply delete it
+        unlink($itemPath);
+      }
+    }
+
+    return true;
   }
 }
 
@@ -130,6 +191,7 @@ $fy_controller = new FinancialYear;
 
 
 $years = $fy_controller->findAll();
+$years_count = count($years);
 
 $yearId = null;
 $yearData = null;

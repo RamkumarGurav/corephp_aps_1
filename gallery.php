@@ -1,14 +1,18 @@
 <?php
 
 
+include("admin/controller/FinancialYear.php");
 include("admin/controller/Album.php");
 //{--------------FRONTEND--------------
 $fe_albums = null;
 $fe_fy = null;
+$active_years = null;
 if (!empty($_SERVER['QUERY_STRING'])) {
   $fe_fy = explode("=", $_SERVER['QUERY_STRING'])[1];
+
   $fe_year = $fy_controller->findOneByFiscalYear($fe_fy);
-  $fe_albums = $album_controller->findAll("year_id", $fe_year['id']);
+  $active_years = $fy_controller->findAllActive();
+  $fe_albums = $album_controller->findAllActive("year_id", $fe_year['id']);
 }
 
 //--------------------------------------------------}
@@ -134,7 +138,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
                       class="fa fa-caret-down"></i></a>
                   <ul class="dropdown-menu pull-right">
 
-                    <?php foreach ($years as $year) : ?>
+                    <?php foreach ($active_years as $year) : ?>
                     <li><a href="<?= "gallery.php?fy={$year["fiscal_year"]}" ?>"><?= $year["fiscal_year"] ?></a>
                     </li>
                     <?php endforeach; ?>

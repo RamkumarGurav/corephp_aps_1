@@ -1,8 +1,9 @@
 <?php
 
 
-$root_path = substr(str_replace("\\", "/", dirname(__DIR__)), 0, -6);
+$root_path = str_replace("\\", "/", dirname(dirname(__DIR__)));
 require_once $root_path . "/admin/model/AlbumModel.php";
+// include("FinancialYear.php");
 
 $current_path = $_SERVER['REQUEST_URI'];
 class Album
@@ -24,6 +25,14 @@ class Album
       return $this->model->findAll();
     }
   }
+  public function findAllActive($columnName = null, $columnValue = null)
+  {
+    if ($columnName != null) {
+      return $this->model->findAllActiveByColumName($columnName, $columnValue);
+    } else {
+      return $this->model->findAllActive();
+    }
+  }
 
   public function findOne($id)
   {
@@ -34,151 +43,252 @@ class Album
 
   public function createAlbumAndAddCoverImage($data, $year_id)
   {
+    $file_name = $_FILES['cover_image']['name'];
+    $file_tmp = $_FILES['cover_image']['tmp_name'];
 
 
-
-    $album_id = $this->model->createOne($data);
-
-
-    // Check if the album was successfully inserted
-    if ($album_id != false) {
-      // Retrieve the uploaded cover image details
+    // Check if the file has been uploaded
+    if (!empty($file_name)) {
+      // Get the file name, type, and size
       $file_name = $_FILES['cover_image']['name'];
-      $file_tmp = $_FILES['cover_image']['tmp_name'];
+      $file_type = $_FILES['cover_image']['type'];
+      $file_size = $_FILES['cover_image']['size'];
+
+      // Define allowed file types and maximum file size
+      $allowed_types = array('image/png', 'image/jpeg', 'image/jpg');
+      $max_file_size = 2 * 1024 * 1024; // 2 MB
+
+      //ti Check image dimensions
+      list($width, $height) = getimagesize($file_tmp);
+
+      // Check if the file type is allowed
+      if (!in_array($file_type, $allowed_types)) {
+        // File type not allowed
+        // Handle the error or display a message
+        // echo "Error: Only PNG, JPEG, and JPG file types are allowed.";
+
+        $_SESSION["album_data"] = $data;
+        $_SESSION["toast_message"] = "Only PNG, JPEG, and JPG Image types are allowed.";
+        $_SESSION["toast_type"] = "alert-danger";
+        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+        exit;
+      } elseif ($file_size > $max_file_size) {
+        // File size exceeds the limit
+        // Handle the error or display a message
+        // echo "Error: File size should not exceed 2MB.";
+        $_SESSION["album_data"] = $data;
+        $_SESSION["toast_message"] = "Image size should not exceed 2MB.";
+        $_SESSION["toast_type"] = "alert-danger";
+        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+        exit;
+      } elseif ($width < 1000 || $height < 1000) {
+        $_SESSION["album_data"] = $data;
+        $_SESSION["toast_message"] = "Minimum image dimensions required is 1000 X 1000 pixels";
+        $_SESSION["toast_type"] = "alert-danger";
+        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+        exit;
+      } else {
 
 
-      if (!empty($file_name)) {
-        // Retrieve the fiscal year from the year table based on the year_id
-        global $fy_controller;
-        $yearRecord = $fy_controller->findOne($year_id);
-        // Initialize fiscal year variable
-        $fy_year = null;
 
-        if (!$yearRecord == false) {
-          // Assign the fiscal year to the variable
-          $fy_year = $yearRecord["fiscal_year"];
+
+        $album_id = $this->model->createOne($data);
+
+
+
+
+        // Check if the album was successfully inserted
+        if ($album_id != false) {
+          // Retrieve the uploaded cover image details
+          $file_name = $_FILES['cover_image']['name'];
+          $file_tmp = $_FILES['cover_image']['tmp_name'];
+
+
+          if (!empty($file_name)) {
+            // Retrieve the fiscal year from the year table based on the year_id
+            global $fy_controller;
+            $yearRecord = $fy_controller->findOne($year_id);
+            // Initialize fiscal year variable
+            $fy_year = null;
+
+            if (!$yearRecord == false) {
+              // Assign the fiscal year to the variable
+              $fy_year = $yearRecord["fiscal_year"];
+            } else {
+              $_SESSION["toast_message"] = "Unable find the Year";
+              $_SESSION["toast_type"] = "alert-danger";
+              header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+              exit;
+            }
+
+
+
+
+
+
+            global $root_path;
+            // Move the uploaded cover image to the appropriate folder
+            $movedImageName =  $this->moveImageToFolder($album_id, $fy_year, $file_name, $file_tmp, $root_path . "/uploads", "cover_images");
+
+
+            if ($movedImageName == false) {
+              $_SESSION["toast_message"] = "Album created successfully but failed to add the cover image";
+              $_SESSION["toast_type"] = "alert-danger";
+              header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+              exit;
+            }
+            // Prepare data for updating the album table with the cover image name
+            $data = ["cover_image" => $movedImageName];
+
+            // Update the album table with the cover image name
+            $isTableUpdated = $this->model->updateOneByColumnName("id", $album_id, $data);
+
+            // Check if the table update was successful
+            if (!$isTableUpdated) {
+              // Display error message if the table update failed
+              $_SESSION["toast_message"] = "Album created successfully but failed to add the cover image";
+              $_SESSION["toast_type"] = "alert-danger";
+              header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+              exit;
+            }
+          }
+          $_SESSION["toast_message"] = "Successfully create the Album";
+          $_SESSION["toast_type"] = "alert-success";
+
+          // Redirect the user to the welcome page after successful album creation
+          header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/listing.php");
+          exit();
         } else {
-          $_SESSION["toast_message"] = "Unable find the Year";
-          $_SESSION["toast_type"] = "alert-danger";
-          header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
-          exit;
-        }
-
-
-
-
-
-
-        global $root_path;
-        // Move the uploaded cover image to the appropriate folder
-        $movedImageName =  $this->moveImageToFolder($album_id, $fy_year, $file_name, $file_tmp, $root_path . "/uploads", "cover_images");
-
-
-        if ($movedImageName == false) {
-          $_SESSION["toast_message"] = "Album created successfully but failed to add the cover image";
-          $_SESSION["toast_type"] = "alert-danger";
-          header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
-          exit;
-        }
-        // Prepare data for updating the album table with the cover image name
-        $data = ["cover_image" => $movedImageName];
-
-        // Update the album table with the cover image name
-        $isTableUpdated = $this->model->updateOneByColumnName("id", $album_id, $data);
-
-        // Check if the table update was successful
-        if (!$isTableUpdated) {
-          // Display error message if the table update failed
-          $_SESSION["toast_message"] = "Album created successfully but failed to add the cover image";
+          $_SESSION["toast_message"] = "Failed to create the Album";
           $_SESSION["toast_type"] = "alert-danger";
           header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
           exit;
         }
       }
-      $_SESSION["toast_message"] = "Successfully create the Album";
-      $_SESSION["toast_type"] = "alert-success";
-
-      // Redirect the user to the welcome page after successful album creation
-      header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/listing.php");
-      exit();
-    } else {
-      $_SESSION["toast_message"] = "Failed to create the Album";
-      $_SESSION["toast_type"] = "alert-danger";
-      header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
-      exit;
     }
   }
 
   public function updateAlbumAndAddCoverImage($id, $data, $year_id)
   {
 
-    $isUpdated = $this->model->updateOneByColumnName("id", $id, $data);
 
 
-    // Check if the album was successfully inserted
-    if (isset($isUpdated)) {
-      // Retrieve the uploaded cover image details
+    $file_name = $_FILES['cover_image']['name'];
+    $file_tmp = $_FILES['cover_image']['tmp_name'];
+
+
+    // Check if the file has been uploaded
+    if (!empty($file_name)) {
+      // Get the file name, type, and size
       $file_name = $_FILES['cover_image']['name'];
-      $file_tmp = $_FILES['cover_image']['tmp_name'];
-      if (!empty($file_name)) {
+      $file_type = $_FILES['cover_image']['type'];
+      $file_size = $_FILES['cover_image']['size'];
+
+      // Define allowed file types and maximum file size
+      $allowed_types = array('image/png', 'image/jpeg', 'image/jpg');
+      $max_file_size = 2 * 1024 * 1024; // 2 MB
+
+      //to Check image dimensions
+      list($width, $height) = getimagesize($file_tmp);
+
+      // Check if the file type is allowed
+      if (!in_array($file_type, $allowed_types)) {
+        // File type not allowed
+        // Handle the error or display a message
+        // echo "Error: Only PNG, JPEG, and JPG file types are allowed.";
+
+        $_SESSION["album_data"] = $data;
+        $_SESSION["toast_message"] = "Only PNG, JPEG, and JPG Image types are allowed.";
+        $_SESSION["toast_type"] = "alert-danger";
+        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID=$id");
+        exit;
+      } elseif ($file_size > $max_file_size) {
+        // File size exceeds the limit
+        // Handle the error or display a message
+        // echo "Error: File size should not exceed 2MB.";
+        $_SESSION["album_data"] = $data;
+        $_SESSION["toast_message"] = "Image size should not exceed 2MB.";
+        $_SESSION["toast_type"] = "alert-danger";
+        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID=$id");
+        exit;
+      } elseif ($width < 1000 || $height < 1000) {
+        $_SESSION["album_data"] = $data;
+        $_SESSION["toast_message"] = "Minimum image dimensions required is 1000 X 1000 pixels";
+        $_SESSION["toast_type"] = "alert-danger";
+        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+        exit;
+      } else {
 
 
-        // Retrieve the fiscal year from the year table based on the year_id
-        global $fy_controller;
-        $yearRecord = $fy_controller->findOne($year_id);
-        // Initialize fiscal year variable
-        $fy_year = null;
+        $isUpdated = $this->model->updateOneByColumnName("id", $id, $data);
 
-        if ($yearRecord != false) {
-          // Assign the fiscal year to the variable
-          $fy_year = $yearRecord["fiscal_year"];
+
+        // Check if the album was successfully inserted
+        if (isset($isUpdated)) {
+          // Retrieve the uploaded cover image details
+          $file_name = $_FILES['cover_image']['name'];
+          $file_tmp = $_FILES['cover_image']['tmp_name'];
+          if (!empty($file_name)) {
+
+
+            // Retrieve the fiscal year from the year table based on the year_id
+            global $fy_controller;
+            $yearRecord = $fy_controller->findOne($year_id);
+            // Initialize fiscal year variable
+            $fy_year = null;
+
+            if ($yearRecord != false) {
+              // Assign the fiscal year to the variable
+              $fy_year = $yearRecord["fiscal_year"];
+            } else {
+              $_SESSION["toast_message"] = "Unable find the Year";
+              $_SESSION["toast_type"] = "alert-danger";
+              header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID={$id}");
+              exit;
+            }
+
+
+
+            global $root_path;
+            // Move the uploaded cover image to the appropriate folder
+            $movedImageName =  $this->moveImageToFolder($id, $fy_year, $file_name, $file_tmp, $root_path . "/uploads", "cover_images");
+
+
+            if ($movedImageName == false) {
+              $_SESSION["toast_message"] = "Album updated successfully but failed to add the cover image";
+              $_SESSION["toast_type"] = "alert-danger";
+              header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID={$id}");
+              exit;
+            }
+            // Prepare data for updating the album table with the cover image name
+            $data = ["cover_image" => $movedImageName];
+
+            // Update the album table with the cover image name
+            $isTableUpdated = $this->model->updateOneByColumnName("id", $id, $data);
+
+            // Check if the table update was successful
+            if (!$isTableUpdated) {
+              // Display error message if the table update failed
+              $_SESSION["toast_message"] = "Album updated successfully but failed to add the cover image";
+              $_SESSION["toast_type"] = "alert-danger";
+              header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID={$id}");
+              exit;
+            }
+          }
+
+          $_SESSION["toast_message"] = "Successfully updated the Album";
+          $_SESSION["toast_type"] = "alert-success";
+
+          // Redirect the user to the welcome page after successful album creation
+          header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/show.php?albumID={$id}");
+          exit();
         } else {
-          $_SESSION["toast_message"] = "Unable find the Year";
-          $_SESSION["toast_type"] = "alert-danger";
-          header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID={$id}");
-          exit;
-        }
-
-
-
-        global $root_path;
-        // Move the uploaded cover image to the appropriate folder
-        $movedImageName =  $this->moveImageToFolder($id, $fy_year, $file_name, $file_tmp, $root_path . "/uploads", "cover_images");
-
-
-        if ($movedImageName == false) {
-          $_SESSION["toast_message"] = "Album updated successfully but failed to add the cover image";
-          $_SESSION["toast_type"] = "alert-danger";
-          header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID={$id}");
-          exit;
-        }
-        // Prepare data for updating the album table with the cover image name
-        $data = ["cover_image" => $movedImageName];
-
-        // Update the album table with the cover image name
-        $isTableUpdated = $this->model->updateOneByColumnName("id", $id, $data);
-
-        // Check if the table update was successful
-        if (!$isTableUpdated) {
-          // Display error message if the table update failed
-          $_SESSION["toast_message"] = "Album updated successfully but failed to add the cover image";
+          $_SESSION["toast_message"] = "Failed to update the Album";
           $_SESSION["toast_type"] = "alert-danger";
           header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID={$id}");
           exit;
         }
       }
-
-      $_SESSION["toast_message"] = "Successfully updated the Album";
-      $_SESSION["toast_type"] = "alert-success";
-
-      // Redirect the user to the welcome page after successful album creation
-      header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/show.php?albumID={$id}");
-      exit();
-    } else {
-      $_SESSION["toast_message"] = "Failed to update the Album";
-      $_SESSION["toast_type"] = "alert-danger";
-      header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID={$id}");
-      exit;
     }
   }
   public function updateAlbum($id, $data)
@@ -235,15 +345,74 @@ class Album
   }
 
 
+
   public function delete()
   {
+    include("FinancialYear.php");
+    include("Gallery.php");
     $ids = $_POST["ids"];
-    foreach ($ids as $id) {
-      $this->model->deleteById($id);
+
+    if (!empty($ids)) {
+      foreach ($ids as $id) {
+        // Retrieve album data to get the cover image filename
+
+
+        $albumData = $this->model->findOneByColumnName("id", $id);
+        $yearData = $fy_controller->findOne($albumData['year_id']);
+        $albumImagesNamesArr = $gallery_controller->findAllAlbumImagesByAlbumId($albumData['id']);
+
+        // var_dump($albumData);
+        // var_dump($yearData);
+        // var_dump($albumImagesNamesArr);
+
+
+        if (
+          !empty($albumData)
+        ) {
+          // Get the cover image filename
+          $cover_image = $albumData['cover_image'];
+          // var_dump($cover_image);
+          // Delete the record from the album table
+          if ($this->model->deleteById($id)) {
+            // Check if the cover image exists and delete it from the uploads folder
+            if (!empty($cover_image)) {
+              global $root_path;
+              $root_uploads_folder = $root_path . "/uploads";
+              $cover_image_path = $root_uploads_folder . "/album/{$yearData['fiscal_year']}/cover_images/" . $cover_image;
+
+
+              if (file_exists($cover_image_path)) {
+                // var_dump($cover_image_path);
+
+                unlink($cover_image_path); // Delete the image file
+              }
+
+              //Deleting the all the album images of the of the above deleted "album"
+              foreach ($albumImagesNamesArr as $image) {
+                // var_dump($image);
+                $root_uploads_folder = $root_path . "/uploads";
+                $cover_image_path = $root_uploads_folder . "/album/{$yearData['fiscal_year']}/album_images/" . $image;
+                if (file_exists($cover_image_path)) {
+                  // var_dump($cover_image_path);
+                  unlink($cover_image_path); // Delete the image file
+                }
+              }
+            }
+          }
+        }
+      }
+
+
+
+
+      $_SESSION["toast_message"] = "Successfully Deleted";
+      $_SESSION["toast_type"] = "alert-success";
+      exit();
+    } else {
+      $_SESSION["toast_message"] = "Select Atleast One Album";
+      $_SESSION["toast_type"] = "alert-danger";
+      exit();
     }
-    $_SESSION["toast_message"] = "Sucessfully Deleted";
-    $_SESSION["toast_type"] = "alert-success";
-    exit();
   }
   public  function moveImageToFolder($id, $fy, $file_name, $file_tmp, $root_uplaods_folder, $destination_folder)
   {
@@ -304,6 +473,103 @@ class Album
 
     return false;
   }
+
+  public function moveImageToFolderX($id, $fy, $file_name, $file_tmp, $root_uplaods_folder, $destination_folder)
+  {
+    // Check if the "uploads" folder exists, if not, create it
+    if (!file_exists($root_uplaods_folder)) {
+      mkdir($root_uplaods_folder);
+    }
+
+    // Create "album" folder inside the "uploads" folder
+    $album_folder = $root_uplaods_folder . "/album";
+    if (!file_exists($album_folder)) {
+      mkdir($album_folder);
+    }
+
+    // Create "fiscal_year" folder inside the "album" folder
+    $fiscal_year_folder = $album_folder . "/" . $fy;
+    if (!file_exists($fiscal_year_folder)) {
+      mkdir($fiscal_year_folder);
+    }
+
+    // Create "cover_images" folder inside the "fiscal_year" folder
+    $cover_images_folder = $fiscal_year_folder . "/cover_images";
+    if (!file_exists($cover_images_folder)) {
+      mkdir($cover_images_folder);
+    }
+
+    // Create "album_images" folder inside the "fiscal_year" folder
+    $album_images_folder = $fiscal_year_folder . "/album_images";
+    if (!file_exists($album_images_folder)) {
+      mkdir($album_images_folder);
+    }
+
+    // Define dimensions for different devices
+    $sizes = array(
+      "sm" => array("width" => 320, "height" => 240),  // For smaller devices (e.g., mobiles)
+      "md" => array("width" => 768, "height" => 576),  // For medium devices (e.g., tablets)
+      "lg" => array("width" => 1024, "height" => 768)  // For larger devices (e.g., desktops)
+    );
+
+    // Get file extension
+    $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+
+    // Loop through each size and resize the image
+    foreach ($sizes as $size => $dimensions) {
+      // Create directory for this size if it doesn't exist
+      $size_folder = $cover_images_folder . '/' . $size;
+      if (!file_exists($size_folder)) {
+        mkdir($size_folder, 0777, true); // Create directory with permissions 0777 (read, write, execute for owner, group, and others) and create intermediate directories as needed
+      }
+
+      // Create a true color image for resizing
+      $resized_image = imagecreatetruecolor($dimensions["width"], $dimensions["height"]);
+
+      // Create an image resource from the uploaded file
+      $source_image = imagecreatefromstring(file_get_contents($file_tmp));
+
+      // Get the original width and height of the image
+      $width_orig = imagesx($source_image);
+      $height_orig = imagesy($source_image);
+
+      // Calculate the original aspect ratio
+      $ratio_orig = $width_orig / $height_orig;
+
+      // Calculate dimensions for resizing while preserving aspect ratio
+      if ($dimensions["width"] / $dimensions["height"] > $ratio_orig) {
+        $dimensions["width"] = $dimensions["height"] * $ratio_orig;
+      } else {
+        $dimensions["height"] = $dimensions["width"] / $ratio_orig;
+      }
+
+      // Resize the image and save it to the resized image resource
+      imagecopyresampled($resized_image, $source_image, 0, 0, 0, 0, $dimensions["width"], $dimensions["height"], $width_orig, $height_orig);
+
+      // Generate a new filename based on the original image ID and the current size
+      $new_filename = $id  . '.' . $file_extension;
+
+      // Define the path to save the resized image
+      $image_path = $size_folder . '/' . $new_filename;
+
+      // Determine the appropriate image format based on the original extension
+      switch ($file_extension) {
+        case 'png':
+          imagepng($resized_image, $image_path); // Save as PNG format
+          break;
+        case 'jpg':
+        case 'jpeg':
+          imagejpeg($resized_image, $image_path); // Save as JPEG format
+          break;
+        default:
+          // Unsupported image format, handle appropriately (here we assume PNG)
+          imagepng($resized_image, $image_path); // Save as PNG format
+      }
+    }
+
+    // Return the filename of the resized image
+    return $new_filename;
+  }
 }
 
 //{--------------CALLING CONTROLLER METHODS--------------
@@ -313,6 +579,7 @@ $album_controller = new Album;
 $albums = null;
 $fyID = null;
 $json_albums = null;
+$numOfAlbums = null;
 
 
 
@@ -326,11 +593,14 @@ if (strpos($current_path, "album/listing.php") != false) {
     $fyID = explode("=", $_SERVER['QUERY_STRING'])[1];
     if ($fyID == "all") {
       $albums = $album_controller->findAll();
+      $numOfAlbums = count($albums);
     } else {
       $albums = $album_controller->findAll("year_id", $fyID);
+      $numOfAlbums = count($albums);
     }
   } else {
     $albums = $album_controller->findAll();
+    $numOfAlbums = count($albums);
   }
 
 
@@ -372,6 +642,10 @@ $isAlbumEditPage = false;
 
 
 if (strpos($current_path, "album/edit.php") != false) {
+
+
+
+
 
   if (strpos($current_path, "album/edit.php?albumID=") != false) {
 
@@ -421,47 +695,6 @@ if (strpos($current_path, "album/edit.php") != false) {
 
 
 
-// $albumId = null;
-// $albumData = null;
-
-// $albumEditPage = null;
-// if (!empty($_SERVER['QUERY_STRING'])) {
-//   $albumEditPage = true;
-//   $albumId = explode("=", $_SERVER['QUERY_STRING'])[1];
-//   $albumData = $album_controller->findOne($albumId);
-//   global $yearData;
-//   $yearData = $fy_controller->findOne($albumData['year_id']);
-
-//   if (isset($_POST["add_album"])) {
-
-//     // Retrieve data from the form submission
-//     $year_id = $_POST['year_id'];
-//     $name = $_POST['name'];
-//     $status = $_POST['status'];
-
-
-//     // Prepare the data to be inserted into the database
-//     $data = ["year_id" => $year_id, "name" => $name, "status" => $status];
-
-
-//     $album_controller->updateAlbumAndAddCoverImage($albumId, $data, $year_id);
-
-//     exit;
-//   }
-// } elseif (isset($_POST["add_album"])) {
-
-//   // Retrieve data from the form submission
-//   $year_id = $_POST['year_id'];
-//   $name = $_POST['name'];
-//   $status = $_POST['status'];
-
-
-//   // Prepare the data to be inserted into the database
-//   $data = ["year_id" => $year_id, "name" => $name, "status" => $status];
-
-
-//   $album_controller->createAlbumAndAddCoverImage($data, $year_id);
-// }
 
 
 
@@ -472,6 +705,7 @@ if (isset($_GET['album_action'])) {
   } else if ($_GET['album_action'] == 'block') {
     $album_controller->block();
   } else if ($_GET['album_action'] == 'delete') {
+
     $album_controller->delete();
   }
 }

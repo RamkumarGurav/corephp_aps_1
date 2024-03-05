@@ -1,5 +1,7 @@
 <?php
 session_start();
+$_SESSION['album_data'] = [];
+$_SESSION['gallery_data'] = [];
 if (!isset($_SESSION["user"])) {
   header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin");
   exit();
@@ -9,6 +11,7 @@ include("../controller/Login.php");
 include("../controller/FinancialYear.php");
 include("../controller/Album.php");
 include("../controller/Gallery.php");
+
 
 
 include("../inc/header.php");
@@ -345,6 +348,8 @@ $(document).ready(function(e) {
 <script>
 // --------------------------------------------------}
 var toastElementFE = $("#customToastFE");
+var numOfAlbumImages = "<?php echo $numOfAlbumImages;  ?>";
+
 function getSelectedAlbumImages() {
   const selectedAlbumImages = [];
   document.querySelectorAll('.album-image-checkbox:checked').forEach(checkbox => {
@@ -376,29 +381,29 @@ function activateSelectedAlbumImages() {
       },
       function(data, status) {
         if (status == "success") {
-            console.log(status);
-            // toastElementFE.removeClass("d-none");
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-success");
-              $("#customToastFEClose").after("successfully Activated");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
+          console.log(status);
+          // toastElementFE.removeClass("d-none");
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-success");
+            $("#customToastFEClose").after("successfully Activated");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
 
-          } else {
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-danger");
-              $("#customToastFEClose").after("Failed to Activate");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
-          }
+        } else {
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-danger");
+            $("#customToastFEClose").after("Failed to Activate");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
+        }
       });
   } else {
     alert('Please select at least one album image to activate.');
@@ -414,100 +419,135 @@ function blockselectedAlbumImages() {
       },
       function(data, status) {
         if (status == "success") {
-            console.log(status);
-            // toastElementFE.removeClass("d-none");
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-success");
-              $("#customToastFEClose").after("successfully Blocked");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
+          console.log(status);
+          // toastElementFE.removeClass("d-none");
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-success");
+            $("#customToastFEClose").after("successfully Blocked");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
 
-          } else {
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-danger");
-              $("#customToastFEClose").after("Failed to block");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
-          }
+        } else {
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-danger");
+            $("#customToastFEClose").after("Failed to block");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
+        }
       });
   } else {
     alert('Please select at least one album image to block.');
   }
 }
 
-// function deleteSelectedAlbumImages() {
-//   const selectedAlbumImages = getSelectedAlbumImages();
-//   if (selectedAlbumImages.length > 0) {
 
-//     alert("Are You sure to Delete ?")
-//     // Specify the correct URL for blocking albums
-//     $.post("../controller/Gallery.php?gallery_action=delete", { // Assuming controller/Album.php is the correct path
-//         ids: selectedAlbumImages
-//       },
-//       function(data, status) {
-//         location.reload();
-//       });
-//   } else {
-//     alert('Please select at least one album image to block.');
-//   }
-// }
+
+
 
 
 
 function deleteSelectedAlbumImages() {
   const selectedAlbumImages = getSelectedAlbumImages();
-  if (selectedAlbumImages.length > 0) {
-    // Show a confirmation dialog
-    if (confirm("Are you sure you want to delete selected album images?")) {
-      // User confirmed deletion, proceed with the deletion
-      $.post("../controller/Gallery.php?gallery_action=delete", {
-          ids: selectedAlbumImages
-        },
-        function(data, status) {
-          if (status == "success") {
-            console.log(status);
-            // toastElementFE.removeClass("d-none");
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-success");
-              $("#customToastFEClose").after("successfully Deleted");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
 
-          } else {
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-danger");
-              $("#customToastFEClose").after("Failed to Delete");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
-          }
-        }
-      );
+  // const selctedAlbumsArr = selectedAlbums.split(",");
+  if (selectedAlbumImages.length > 0) {
+
+    if (selectedAlbumImages.length == numOfAlbumImages) {
+      const proceed = prompt("Type 'proceed to delete all', To proceed with deleting all selected album images:");
+      if (proceed === "proceed to delete all") {
+        // User confirmed deletion, proceed with the deletion
+        $.post("../controller/Gallery.php?gallery_action=delete", {
+            ids: selectedAlbumImages
+          },
+          function(data, status) {
+            if (status == "success") {
+              console.log(status);
+              // toastElementFE.removeClass("d-none");
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-success");
+                $("#customToastFEClose").after("successfully Deleted");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+
+            } else {
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-danger");
+                $("#customToastFEClose").after("Failed to Delete");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+            }
+          });
+      } else {
+
+        alert("Deletion canceled. You Didn't type correctly Try Again.");
+        // // Deselect the "Select All" checkbox
+
+        location.reload();
+
+      }
+
     } else {
-      // User cancelled deletion, deselect checkboxes
-      document.querySelectorAll('.album-image-checkbox:checked').forEach(checkbox => {
-        checkbox.checked = false;
-      });
-      // Deselect the "Select All" checkbox
-      document.querySelector('.all-album-images-checkbox').checked = false;
+
+      if (confirm("Are you sure you want to delete selected album images?")) {
+        // Prompt user for secondary confirmation
+
+        // User confirmed deletion, proceed with the deletion
+        $.post("../controller/Gallery.php?gallery_action=delete", {
+            ids: selectedAlbumImages
+          },
+          function(data, status) {
+            if (status == "success") {
+              console.log(status);
+              // toastElementFE.removeClass("d-none");
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-success");
+                $("#customToastFEClose").after("successfully Deleted");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+
+            } else {
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-danger");
+                $("#customToastFEClose").after("Failed to Delete");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+            }
+          }
+        );
+
+      } else {
+        // Deselect the "Select All" checkbox
+
+        location.reload();
+
+      }
     }
   } else {
-    alert('Please select at least one album image to delete.');
+    alert('Please select at least one album Image to delete.');
   }
 }
 </script>

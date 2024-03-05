@@ -63,13 +63,26 @@ include("../inc/leftnav.php");
                     <!-- select -->
                     <div class="form-group">
                       <label>Select Fiscal Year</label>
-                      <?php if ($isAlbumEditPage == true) : ?>
+                      <?php if (!empty($_SESSION['album_data']['year_id'])) : ?>
+                      <select class="form-control" id="year_id" name="year_id" required>
+                        <option value=""></option>
+                        <?php foreach ($years as $year) : ?>
+                        <option value="<?= $year['id']; ?>"
+                          <?= $_SESSION['album_data']["year_id"] == $year['id'] ? "selected" : ""; ?>>
+                          <?= $year['fiscal_year']; ?></option>
+                        <?php endforeach; ?>
+
+                      </select>
+                      <?php elseif ($isAlbumEditPage == true) : ?>
                       <select class="form-control" id="year_id" name="year_id" required readonly>
                         <option value="<?= $yearData['id'] ?>"><?= $yearData['fiscal_year'] ?></option>
 
 
                       </select>
+
                       <?php else : ?>
+
+
                       <select class="form-control" id="year_id" name="year_id" required>
                         <option value=""></option>
                         <?php foreach ($years as $year) : ?>
@@ -91,8 +104,15 @@ include("../inc/leftnav.php");
                     <!-- text input -->
                     <div class="form-group">
                       <label for="name">Album Name</label>
+                      <?php if (!empty($_SESSION['album_data']['name'])) : ?>
+                      <input type="text" class="form-control" placeholder="Enter Album Name..." name="name" id="name"
+                        value="<?= !empty($_SESSION['album_data']['name']) ? $_SESSION['album_data']['name'] : ""   ?>"
+                        required />
+                      <?php else : ?>
                       <input type="text" class="form-control" placeholder="Enter Album Name..." name="name" id="name"
                         value="<?= $albumData != null ? $albumData["name"] : ""   ?>" required />
+                      <?php endif; ?>
+
                     </div>
                   </div>
                 </div>
@@ -103,7 +123,7 @@ include("../inc/leftnav.php");
                   <div class="col-sm-12">
                     <!-- text input -->
                     <div class="form-group">
-                      <label for="cover_image">Cover Image</label>
+                      <label for="cover_image">Cover Image </label>
 
                       <?php if ($isAlbumEditPage == true) : ?>
                       <div class="d-flex align-items-center">
@@ -121,11 +141,16 @@ include("../inc/leftnav.php");
                         </div>
 
                       </div>
+                      <small class="text-muted mt-1 mb-2"> &#40; only
+                        PNG/JPEG/JPG image formats less than
+                        2MB
+                        are allowed &#41;</small>
                       <?php else : ?>
                       <div class="d-flex align-items-center">
                         <div class="custom-file mr-4" style="max-width: 500px">
-                          <input type="file" class="custom-file-input" id="cover_image" name="cover_image" />
-                          <label class="custom-file-label" for="exampleInputFile"></label>
+                          <input type="file" class="custom-file-input" id="cover_image" name="cover_image"
+                            accept="image/png, image/jpeg,image/jpg" />
+                          <label class="custom-file-label" for="exampleInputFile">Choose image</label>
                         </div>
                         <div id="coverImagePreviewContainer" class="d-flex justify-content-center align-items-center"
                           style="height: 38px; width: 41px">
@@ -134,6 +159,10 @@ include("../inc/leftnav.php");
                         </div>
 
                       </div>
+                      <small class="text-muted mt-1 mb-2"> &#40; only
+                        PNG/JPEG/JPG image formats less than
+                        2MB
+                        are allowed &#41;</small>
                       <?php endif; ?>
 
                     </div>
@@ -145,7 +174,19 @@ include("../inc/leftnav.php");
                     <!-- radio -->
                     <label class="form-check-label">Select Status</label>
                     <div class="form-group  ">
-                      <?php if ($isAlbumEditPage == true) : ?>
+                      <?php if ((!empty($_SESSION['album_data']))) : ?>
+                      <div class="form-check mr-5">
+                        <input class="form-check-input" type="radio" name="status" required value="1"
+                          <?= $_SESSION['album_data']['status'] === "1" ? "checked" : ""    ?>>
+                        <label class=" form-check-label">Active</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" required value="0"
+                          <?= $_SESSION['album_data']['status'] === "0" ? "checked" : ""    ?>>
+                        <label class="form-check-label">Block</label>
+                      </div>
+
+                      <?php elseif ($isAlbumEditPage == true) : ?>
                       <div class="form-check mr-5">
                         <input class="form-check-input" type="radio" name="status" required value="1"
                           <?= ($albumData != null && $albumData["status"] == 1) ? "checked" : ""    ?>>
@@ -158,7 +199,7 @@ include("../inc/leftnav.php");
                       </div>
                       <?php else : ?>
                       <div class="form-check mr-5">
-                        <input class="form-check-input" type="radio" name="status" required value="1">
+                        <input class="form-check-input" type="radio" name="status" required value="1" checked>
                         <label class=" form-check-label">Active</label>
                       </div>
                       <div class="form-check">
@@ -198,6 +239,11 @@ include("../inc/footer.php")
 $(document).ready(function() {
   // Add event listener for image input change
   $('#cover_image').change(function(event) {
+
+
+
+
+
     // Get the selected file
     const file = event.target.files[0];
     if (file) {
@@ -217,5 +263,9 @@ $(document).ready(function() {
       reader.readAsDataURL(file);
     }
   });
+
+
+
+
 })
 </script>

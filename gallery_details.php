@@ -1,6 +1,7 @@
 <?php
 
 
+include("admin/controller/FinancialYear.php");
 include("admin/controller/Album.php");
 include("admin/controller/Gallery.php");
 
@@ -9,11 +10,13 @@ $fe_album_details = null;
 $fe_year_details = null;
 $fe_gallery_images = null;
 $fe_album_id = null;
+$active_years = null;
 if (!empty($_SERVER['QUERY_STRING'])) {
   $fe_album_id = explode("=", $_SERVER['QUERY_STRING'])[1];
   $fe_album_details =  $album_controller->findOne($fe_album_id);
   $fe_year_details =  $fy_controller->findOne($fe_album_details['year_id']);
-  $fe_gallery_images = $gallery_controller->findAll("album_id", $fe_album_id);
+  $active_years =  $fy_controller->findAllActive();
+  $fe_gallery_images = $gallery_controller->findAllActive("album_id", $fe_album_id);
 }
 
 
@@ -38,12 +41,14 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   <link href="css/custome.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <!--<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Poppins:300,400,500,600,700|Raleway:300,400,500,600,700" rel="stylesheet">-->
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Poppins:300,400,500,600,700|Raleway:300,400,500,600,700" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Poppins:300,400,500,600,700|Raleway:300,400,500,600,700"
+    rel="stylesheet">
   <link rel="stylesheet" href="toastr/toastr.min.css">
   <style>
-    .err-bd {
-      border: 1px solid #c21c20 !important;
-    }
+  .err-bd {
+    border: 1px solid #c21c20 !important;
+  }
   </style>
 </head>
 
@@ -54,23 +59,29 @@ if (!empty($_SERVER['QUERY_STRING'])) {
     <button class="close_btn_1 contact-opener">X</button>
     <div id="contact_body">
       <div class="contact-form">
-        <form name="enqForm" id="SideContact-us" action="controllers/doEnq.php" accept-charset="utf-8" autocomplete="off" enctype="multipart/form-data" method="POST" class="contact-form">
+        <form name="enqForm" id="SideContact-us" action="controllers/doEnq.php" accept-charset="utf-8"
+          autocomplete="off" enctype="multipart/form-data" method="POST" class="contact-form">
           <input type="hidden" name="enq_type" value="SideContact-us">
           <input type="hidden" name="pagelink" value="saraswati-pooja.html">
           <div class="form-group">
-            <input type="text" id="SideContact-us-name" name="name_sidecontact_us" pattern="(?=.*[A-Za-z])[A-Za-z\s]*" required="required" class="enqur_form1" placeholder="Name*" />
+            <input type="text" id="SideContact-us-name" name="name_sidecontact_us" pattern="(?=.*[A-Za-z])[A-Za-z\s]*"
+              required="required" class="enqur_form1" placeholder="Name*" />
           </div>
           <div class="form-group">
-            <input type="email" id="SideContact-us-email" name="email_sidecontact_us" class="enqur_form1" required="required" placeholder="Email Address*" />
+            <input type="email" id="SideContact-us-email" name="email_sidecontact_us" class="enqur_form1"
+              required="required" placeholder="Email Address*" />
           </div>
           <div class="form-group">
-            <input type="number" id="SideContact-us-contact" name="contact_sidecontact_us" class="enqur_form1" required="required" placeholder="Contact No*" />
+            <input type="number" id="SideContact-us-contact" name="contact_sidecontact_us" class="enqur_form1"
+              required="required" placeholder="Contact No*" />
           </div>
           <div class="form-group">
-            <textarea name="message_sidecontact_us" id="SideContact-us-message" class="enqur_form1 textarea" required="required" placeholder="Message*"></textarea>
+            <textarea name="message_sidecontact_us" id="SideContact-us-message" class="enqur_form1 textarea"
+              required="required" placeholder="Message*"></textarea>
           </div>
           <div class="form-group">
-            <button class="g-recaptcha banner_btn2" data-sitekey="6LcxrdYmAAAAAKI2wq9VxJdefXSEeSKwMNpbFiQo" data-callback='onSubmit1' data-action='submit'>Send Message</button>
+            <button class="g-recaptcha banner_btn2" data-sitekey="6LcxrdYmAAAAAKI2wq9VxJdefXSEeSKwMNpbFiQo"
+              data-callback='onSubmit1' data-action='submit'>Send Message</button>
           </div>
           <div class="clear"></div>
         </form>
@@ -96,20 +107,23 @@ if (!empty($_SERVER['QUERY_STRING'])) {
         <nav class="navbar navbar-default bootsnav" data-spy="affix" data-offset-top="60">
           <div class="container">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu"><i class="fa fa-bars"></i></button>
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu"><i
+                  class="fa fa-bars"></i></button>
               <a class="navbar-brand" href="index.html"><img src="images/logo.png" class="logo_mwidth" alt=""></a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-menu">
               <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
                 <li><a href="index.html">Home</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">About Us<i class="fa fa-caret-down"></i></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">About Us<i
+                      class="fa fa-caret-down"></i></a>
                   <ul class="dropdown-menu pull-right">
                     <li><a href="about-us.html">Overview</a></li>
                     <li><a href="mission-vision.html">Our Vision / Mission</a></li>
                     <li><a href="admission-procedure.html">Admission Procedure</a></li>
                   </ul>
                 </li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Messages<i class="fa fa-caret-down"></i></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Messages<i
+                      class="fa fa-caret-down"></i></a>
                   <ul class="dropdown-menu pull-right">
                     <li><a href="chairmans-message.html">Chairperson Message</a></li>
                     <li><a href="vice-chairmans-message.html">Vice Chairperson Message</a></li>
@@ -117,7 +131,8 @@ if (!empty($_SERVER['QUERY_STRING'])) {
                     <li><a href="trustees-message.html">Trustee's Message</a></li>
                   </ul>
                 </li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Academics <i class="fa fa-caret-down"></i></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Academics <i
+                      class="fa fa-caret-down"></i></a>
                   <ul class="dropdown-menu pull-right">
                     <li><a href="curriculum.html">Curriculum</a></li>
                     <li><a href="co-curricular-activities.html">Co-Curricular Activities</a></li>
@@ -127,11 +142,12 @@ if (!empty($_SERVER['QUERY_STRING'])) {
                   </ul>
                 </li>
                 <li><a href="facilities.html">Facilities</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Gallery <i class="fa fa-caret-down"></i></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Gallery <i
+                      class="fa fa-caret-down"></i></a>
                   <ul class="dropdown-menu pull-right">
-                    <?php foreach ($years as $year) : ?>
-                      <li><a href="<?= "gallery.php?fy={$year["fiscal_year"]}" ?>"><?= $year["fiscal_year"] ?></a>
-                      </li>
+                    <?php foreach ($active_years as $year) : ?>
+                    <li><a href="<?= "gallery.php?fy={$year["fiscal_year"]}" ?>"><?= $year["fiscal_year"] ?></a>
+                    </li>
                     <?php endforeach; ?>
                   </ul>
                 </li>
@@ -177,19 +193,23 @@ if (!empty($_SERVER['QUERY_STRING'])) {
         <div class="row">
 
           <?php if (empty($fe_gallery_images)) : ?>
-            <p>Empty</p>
+          <p>Empty</p>
           <?php else : ?>
-            <?php foreach ($fe_gallery_images as $fe_gallery_image) : ?>
-              <div class="events_col2  animated wow slideInUp">
-                <div class="events_colw">
-                  <div class="events_imag">
-                    <a class="example-image-link" href="<?= "uploads/album/{$fe_year_details['fiscal_year']}/album_images/{$fe_gallery_image['album_image']}" ?>" data-lightbox="example-1" title="<?= $fe_album_details['name'] ?>">
-                      <img class="example-image img-responsive" src="<?= "uploads/album/{$fe_year_details['fiscal_year']}/album_images/{$fe_gallery_image['album_image']}" ?>" alt="<?= $fe_album_details['name'] ?>" title="<?= $fe_album_details['name'] ?>" />
-                    </a>
-                  </div>
-                </div>
+          <?php foreach ($fe_gallery_images as $fe_gallery_image) : ?>
+          <div class="events_col2  animated wow slideInUp">
+            <div class="events_colw">
+              <div class="events_imag">
+                <a class="example-image-link"
+                  href="<?= "uploads/album/{$fe_year_details['fiscal_year']}/album_images/{$fe_gallery_image['album_image']}" ?>"
+                  data-lightbox="example-1" title="<?= $fe_album_details['name'] ?>">
+                  <img class="example-image img-responsive"
+                    src="<?= "uploads/album/{$fe_year_details['fiscal_year']}/album_images/{$fe_gallery_image['album_image']}" ?>"
+                    alt="<?= $fe_album_details['name'] ?>" title="<?= $fe_album_details['name'] ?>" />
+                </a>
               </div>
-            <?php endforeach; ?>
+            </div>
+          </div>
+          <?php endforeach; ?>
           <?php endif; ?>
 
 
@@ -232,7 +252,9 @@ if (!empty($_SERVER['QUERY_STRING'])) {
           </ul>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12 animated wow slideInUp" data-wow-duration="2s">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.7324382422685!2d77.55048051482149!3d12.92491069088659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb6ab8f59d27ee566!2sAppolo%20Public%20School!5e0!3m2!1sen!2sin!4v1639141357781!5m2!1sen!2sin" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.7324382422685!2d77.55048051482149!3d12.92491069088659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb6ab8f59d27ee566!2sAppolo%20Public%20School!5e0!3m2!1sen!2sin!4v1639141357781!5m2!1sen!2sin"
+            width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
       </div>
     </div>
@@ -258,82 +280,82 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   <script src='js/wow.js'></script>
   <script src='js/lightbox-plus-jquery.min.js'></script>
   <script>
-    wow = new WOW({
-      animateClass: 'animated',
-      offset: 100,
-      callback: function(box) {
-        console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
-      }
-    });
-    wow.init();
-    document.getElementById('moar').onclick = function() {
-      var section = document.createElement('section');
-      section.className = 'section--purple wow fadeInDown';
-      this.parentNode.insertBefore(section, this);
-    };
+  wow = new WOW({
+    animateClass: 'animated',
+    offset: 100,
+    callback: function(box) {
+      console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
+    }
+  });
+  wow.init();
+  document.getElementById('moar').onclick = function() {
+    var section = document.createElement('section');
+    section.className = 'section--purple wow fadeInDown';
+    this.parentNode.insertBefore(section, this);
+  };
   </script>
 
 
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="toastr/toastr.min.js"></script>
   <script>
-    function onSubmit1(token) {
-      //document.getElementById("demo-form").submit();
-      contactvalidateForm1();
-    }
+  function onSubmit1(token) {
+    //document.getElementById("demo-form").submit();
+    contactvalidateForm1();
+  }
   </script>
   <script>
-    function contactvalidateForm1() {
-      var phonepatern = /^\d{10,12}$/;
-      var emailReg = /^([a-zA-Z0-9_\.\-])+\@(([0-9a-zA-Z\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  function contactvalidateForm1() {
+    var phonepatern = /^\d{10,12}$/;
+    var emailReg = /^([a-zA-Z0-9_\.\-])+\@(([0-9a-zA-Z\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-      var name = $('#SideContact-us-name').val();
-      var email = $('#SideContact-us-email').val();
-      var contact = $('#SideContact-us-contact').val();
-      var message = $('#SideContact-us-message').val();
-      //var img = $('#myfile').val();
-      //alert(destinations);
-      var els = document.getElementsByClassName('err-bd');
-      while (els[0]) {
-        els[0].classList.remove('err-bd')
-      }
-
-      //var response = grecaptcha.getResponse(html_element_id2);	
-      if (name == '') {
-        toastr.error("Please enter your name");
-        $('#SideContact-us-name').addClass("err-bd");
-        $('#SideContact-us-name').focus();
-      } else if (email == '') {
-        toastr.error("Please enter email");
-        $('#SideContact-us-email').addClass("err-bd");
-        $('#SideContact-us-email').focus();
-      } else if (!emailReg.test(email)) {
-        toastr.error("Invalid email id");
-        $('#SideContact-us-email').addClass("err-bd");
-        $('#SideContact-us-email').focus();
-      } else if (contact == '') {
-        toastr.error("Please enter mobile number");
-        $('#SideContact-us-contact').addClass("err-bd");
-        $('#SideContact-us-contact').focus();
-      } else if (!phonepatern.test(contact)) {
-        toastr.error("Invalid phone number");
-        $('#SideContact-us-contact').addClass("err-bd");
-        $('#SideContact-us-contact').focus();
-      } else if (message == '') {
-        toastr.error("Please enter your message / requirement");
-        $('#SideContact-us-message').addClass("err-bd");
-        $('#SideContact-us-message').focus();
-      }
-      //else if(response.length == 0){
-      //toastr.error("You can't proceed! captcha validation failed.");
-      //}
-      else {
-        $('#SideContact-us').submit();
-        //document.getElementById("enq_form").submit();
-        return true;
-      }
-      return false;
+    var name = $('#SideContact-us-name').val();
+    var email = $('#SideContact-us-email').val();
+    var contact = $('#SideContact-us-contact').val();
+    var message = $('#SideContact-us-message').val();
+    //var img = $('#myfile').val();
+    //alert(destinations);
+    var els = document.getElementsByClassName('err-bd');
+    while (els[0]) {
+      els[0].classList.remove('err-bd')
     }
+
+    //var response = grecaptcha.getResponse(html_element_id2);	
+    if (name == '') {
+      toastr.error("Please enter your name");
+      $('#SideContact-us-name').addClass("err-bd");
+      $('#SideContact-us-name').focus();
+    } else if (email == '') {
+      toastr.error("Please enter email");
+      $('#SideContact-us-email').addClass("err-bd");
+      $('#SideContact-us-email').focus();
+    } else if (!emailReg.test(email)) {
+      toastr.error("Invalid email id");
+      $('#SideContact-us-email').addClass("err-bd");
+      $('#SideContact-us-email').focus();
+    } else if (contact == '') {
+      toastr.error("Please enter mobile number");
+      $('#SideContact-us-contact').addClass("err-bd");
+      $('#SideContact-us-contact').focus();
+    } else if (!phonepatern.test(contact)) {
+      toastr.error("Invalid phone number");
+      $('#SideContact-us-contact').addClass("err-bd");
+      $('#SideContact-us-contact').focus();
+    } else if (message == '') {
+      toastr.error("Please enter your message / requirement");
+      $('#SideContact-us-message').addClass("err-bd");
+      $('#SideContact-us-message').focus();
+    }
+    //else if(response.length == 0){
+    //toastr.error("You can't proceed! captcha validation failed.");
+    //}
+    else {
+      $('#SideContact-us').submit();
+      //document.getElementById("enq_form").submit();
+      return true;
+    }
+    return false;
+  }
   </script>
 
 </body>

@@ -51,6 +51,17 @@ class GalleryModel
     }
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+  public function findAllActive()
+  {
+    $sql = "SELECT * FROM {$this->table_name} WHERE status='1' ORDER BY image_order DESC";
+    $stmt = $this->conn->prepare($sql);
+    $result = $stmt->execute();
+    if (!$result) {
+      echo "failed to fetch records from table $this->table_name";
+      exit;
+    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
   public function findAllByColumName($columnName, $columnValue)
   {
     $sql = "SELECT * FROM {$this->table_name} where $columnName=$columnValue  ORDER BY image_order DESC";
@@ -68,7 +79,73 @@ class GalleryModel
       return false;
     }
   }
+  public function findAllActiveByColumName($columnName, $columnValue)
+  {
+    $sql = "SELECT * FROM {$this->table_name} where {$columnName}=$columnValue AND status='1' ORDER BY image_order DESC";
 
+    $stmt = $this->conn->prepare($sql);
+    $result = $stmt->execute();
+
+
+
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (count($data) > 0) {
+      return   $data;
+    } else {
+      return false;
+    }
+  }
+
+
+  public function findAllActiveAlbumImagesByAlbumId($album_id)
+  {
+
+
+    $sql = "SELECT album_image FROM {$this->table_name} WHERE album_id=:album_id AND status='1'";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':album_id', $album_id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    // Fetch IDs in descending order
+    $album_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Extract IDs into a simple array
+    //array_column method converts $ids=[["id"=>15],["id"=>16]] into simple array ["0"=>15,"1"=>16]
+    $data = array_column($album_images, 'album_image');
+
+
+
+    if (!empty($data)) {
+      return   $data;
+    } else {
+      return false;
+    }
+  }
+  public function findAllAlbumImagesByAlbumId($album_id)
+  {
+
+
+    $sql = "SELECT album_image FROM {$this->table_name} WHERE album_id=:album_id ";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':album_id', $album_id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    // Fetch IDs in descending order
+    $album_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Extract IDs into a simple array
+    //array_column method converts $ids=[["id"=>15],["id"=>16]] into simple array ["0"=>15,"1"=>16]
+    $data = array_column($album_images, 'album_image');
+
+
+
+    if (!empty($data)) {
+      return   $data;
+    } else {
+      return false;
+    }
+  }
 
   // public  function createOne($data)
   // {

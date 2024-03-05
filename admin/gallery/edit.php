@@ -98,14 +98,22 @@ include("../inc/leftnav.php");
                       <label for="album_image">Upload Image</label>
                       <div class="d-flex  align-items-center ">
                         <div class=" d-flex justify-content-between align-items-center mr-4">
+                          <?php if(!empty($_SESSION['gallery_data']['name'])): ?>
+                          <input type="text" name="name" id="name" class="form-control"
+                            value="<?= !empty($_SESSION['gallery_data']['name']) ? $_SESSION['gallery_data']['name'] : ""  ?>"
+                            placeholder="Enter Image Name..." />
+                          <?php else: ?>
                           <input type="text" name="name" id="name" class="form-control"
                             value="<?= $galleryImageData != null ? $galleryImageData["name"] : ""  ?>"
                             placeholder="Enter Image Name..." />
+                          <?php endif; ?>
+
                         </div>
                         <div class="custom-file mr-4" style="max-width: 500px">
-                          <input type="file" class="custom-file-input" id="album_image" name="album_image" />
+                          <input type="file" class="custom-file-input" id="album_image" name="album_image"
+                            accept="image/png, image/jpeg,image/jpg" />
                           <label class="custom-file-label"
-                            for="exampleInputFile"><?= $galleryImageData["album_image"]  ?></label>
+                            for="exampleInputFile"><?= $galleryImageData["album_image"] ?? "Choose Image"  ?></label>
                         </div>
                         <div id="albumImagePreviewContainer" class="d-flex justify-content-center align-items-center"
                           style="height: 38px; width: 41px">
@@ -117,27 +125,70 @@ include("../inc/leftnav.php");
                         </div>
 
                       </div>
+                      <small class="text-muted mt-1 mb-2"> &#40; only
+                        PNG/JPEG/JPG image formats less than
+                        2MB
+                        are allowed &#41;</small>
                     </div>
+
                   </div>
                 </div>
 
+                <!-- <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="">New Upload</label>
+                      <div class="d-flex align-items-center">
+                        <div class="custom-file mr-4" style="max-width: 500px">
+                          <input type="file" class="custom-file-input" id="albumx_image" name="albumx_image"
+                            accept="image/png, image/jpeg,image/jpg" />
+                          <label class="custom-file-label" for="exampleInputFile">Choose image</label>
+                        </div>
+                        <div id="albumxImagePreviewContainer" class="d-flex justify-content-center align-items-center"
+                          style="height: 38px; width: 41px">
 
+
+                        </div>
+
+                      </div>
+                      <small class="text-muted mt-1 mb-2"> &#40; only
+                        PNG/JPEG/JPG image formats less than
+                        2MB
+                        are allowed &#41;</small>
+                    </div>
+                  </div>
+                </div> -->
 
                 <div class="row">
                   <div class="col-sm-12">
                     <!-- radio -->
                     <label class="form-check-label">Select Status</label>
                     <div class="form-group  ">
+                      <?php if ((!empty($_SESSION['gallery_data']))) : ?>
+                      <div class="form-check mr-5">
+                        <input class="form-check-input" type="radio" name="status" required value="1"
+                          <?= $_SESSION['gallery_data']['status'] === "1" ? "checked" : ""    ?>>
+                        <label class=" form-check-label">Active</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" required value="0"
+                          <?= $_SESSION['gallery_data']['status'] === "0" ? "checked" : ""    ?>>
+                        <label class="form-check-label">Block</label>
+                      </div>
+
+                      <?php else : ?>
                       <div class="form-check mr-5">
                         <input class="form-check-input" type="radio" name="status" required value="1"
                           <?= ($galleryImageData != null && $galleryImageData["status"] == 1) ? "checked" : ""    ?>>
-                        <label class=" form-check-label">Active</label>
+                        <label class=" form-check-label x">Active</label>
                       </div>
                       <div class="form-check">
                         <input class="form-check-input" type="radio" name="status" required value="0"
                           <?= ($galleryImageData != null && $galleryImageData["status"] == 0) ? "checked" : ""    ?>>
                         <label class="form-check-label">Block</label>
                       </div>
+                      <?php endif; ?>
+
 
                     </div>
                   </div>
@@ -198,6 +249,18 @@ $(document).ready(function() {
 
 
 
+
+
+
+
+
+
+
+
+})
+</script>
+<script>
+$(document).ready(function() {
   // Add event listener for image input change
   $('#album_image').change(function(event) {
     // Get the selected file
@@ -220,6 +283,27 @@ $(document).ready(function() {
     }
   });
 
+  // Add event listener for image input change
+  $('#albumx_image').change(function(event) {
 
+    // Get the selected file
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const imagePreviewContainer = $('#albumxImagePreviewContainer');
+        const imgElement = $('<img>').attr('src', e.target.result)
+          .addClass('img-fluid ')
+          .css({
+            width: '38px',
+            height: '38px',
+            objectFit: 'cover'
+          });
+        imagePreviewContainer.empty(); // Clear previous image previews
+        imagePreviewContainer.append(imgElement);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 })
 </script>

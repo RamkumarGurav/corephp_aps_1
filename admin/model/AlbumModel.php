@@ -53,9 +53,22 @@ class AlbumModel
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+
+  public function findAllActive()
+  {
+    $sql = "SELECT * FROM {$this->table_name} WHERE status='1' ORDER BY album_order DESC";
+    $stmt = $this->conn->prepare($sql);
+    $result = $stmt->execute();
+    if (!$result) {
+      echo "failed to fetch records from table $this->table_name";
+      exit;
+    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
   public function findAllByColumName($columnName, $columnValue)
   {
-    $sql = "SELECT * FROM {$this->table_name} where $columnName=$columnValue ORDER BY album_order DESC";
+    $sql = "SELECT * FROM {$this->table_name} where $columnName=$columnValue  ORDER BY album_order DESC";
     $stmt = $this->conn->prepare($sql);
     $result = $stmt->execute();
 
@@ -69,7 +82,21 @@ class AlbumModel
     }
   }
 
+  public function findAllActiveByColumName($columnName, $columnValue)
+  {
+    $sql = "SELECT * FROM {$this->table_name} where $columnName=$columnValue AND status='1' ORDER BY album_order DESC";
+    $stmt = $this->conn->prepare($sql);
+    $result = $stmt->execute();
 
+
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (count($data) > 0) {
+      return   $data;
+    } else {
+      return false;
+    }
+  }
 
   public function createOne($data)
   {
@@ -123,35 +150,6 @@ class AlbumModel
 
 
 
-  // public function reorderAlbumsById($newOrder, $year_id)
-  // {
-
-
-  //   $orderArr=$this->getIdsInDesc($year_id);
-  //   $i=0;
-  //   foreach ($newOrder as $album_id) {
-  //     $this->conn->query("UPDATE {$this->table_name} SET order={$orderArr[$i]} WHERE id=$album_id");
-  //     $i++;
-  //   }
-  // }
-
-  // public function getIdsInDesc($year_id)
-  // {
-  //   $sql = "SELECT id FROM {$this->table_name} WHERE year_id=$year_id ORDER BY id DESC";
-  //   $stmt = $this->conn->prepare($sql);
-  //   $result = $stmt->execute();
-
-
-  //   if (!$result) {
-  //     return false;
-  //   }
-
-  //   $ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-  //   return $ids;
-  // }
 
 
 
@@ -267,6 +265,42 @@ class AlbumModel
     if ($stmt->execute()) {
       return true;
     } else {
+      return false;
+    }
+  }
+
+
+  public function deleteMultipleByIds($ids)
+  {
+    // Begin a transaction
+    $this->conn->beginTransaction();
+
+    try {
+      // Create a placeholder for the IDs
+      $placeholders = implode(',', array_fill(0, count($ids), '?'));
+
+      // Prepare the SQL query to delete multiple records
+      $sql = "DELETE FROM {$this->table_name} WHERE id IN ($placeholders)";
+      $stmt = $this->conn->prepare($sql);
+
+      // Bind the IDs to the placeholders
+      foreach ($ids as $index => $id) {
+        $stmt->bindValue($index + 1, $id, PDO::PARAM_INT);
+      }
+
+      // Execute the query
+      $stmt->execute();
+
+      // Commit the transaction
+      $this->conn->commit();
+
+      return true;
+    } catch (PDOException $e) {
+      // Rollback the transaction in case of an exception
+      $this->conn->rollBack();
+
+      // Handle the exception (you can log the error or throw it)
+      error_log("Error deleting records: " . $e->getMessage());
       return false;
     }
   }

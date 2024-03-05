@@ -59,19 +59,20 @@ include("../inc/leftnav.php");
                     <div class="form-group">
                       <label>Select Fiscal Year</label>
                       <?php if ($isAddMoreImagesPage) : ?>
-                        <select class="form-control" id="year_id" name="year_id" required readonly>
-                          <option value="<?= $yearData['id'] ?>"><?= $yearData['fiscal_year'] ?></option>
+                      <select class="form-control" id="year_id" name="year_id" required readonly>
+                        <option value="<?= $yearData['id'] ?>"><?= $yearData['fiscal_year'] ?></option>
 
-                        </select>
+                      </select>
                       <?php else : ?>
-                        <select class="form-control" id="year_id" name="year_id" required>
-                          <option value=""></option>
-                          <?php foreach ($years as $year) : ?>
-                            <option value="<?= $year['id']; ?>" <?= $albumData["year_id"] == $year['id'] ? "selected" : ""; ?>>
-                              <?= $year['fiscal_year']; ?></option>
-                          <?php endforeach; ?>
+                      <select class="form-control" id="year_id" name="year_id" required>
+                        <option value=""></option>
+                        <?php foreach ($years as $year) : ?>
+                        <option value="<?= $year['id']; ?>"
+                          <?= $albumData["year_id"] == $year['id'] ? "selected" : ""; ?>>
+                          <?= $year['fiscal_year']; ?></option>
+                        <?php endforeach; ?>
 
-                        </select>
+                      </select>
                       <?php endif; ?>
 
                     </div>
@@ -83,24 +84,24 @@ include("../inc/leftnav.php");
                     <div class="form-group">
                       <label>Select Album</label>
                       <?php if ($isAddMoreImagesPage) : ?>
-                        <select class="form-control" id="album_id" name="album_id" readonly>
-                          <option value="<?= $albumData['id'] ?>">
-                            <?= $albumData["name"] ?> </option>
+                      <select class="form-control" id="album_id" name="album_id" readonly>
+                        <option value="<?= $albumData['id'] ?>">
+                          <?= $albumData["name"] ?> </option>
 
 
-                        </select>
+                      </select>
                       <?php else : ?>
-                        <select class="form-control" id="album_id" name="album_id">
-                          <option value="">
-                          </option>
-                          <?php foreach ($albums as $album) : ?>
+                      <select class="form-control" id="album_id" name="album_id">
+                        <option value="">
+                        </option>
+                        <?php foreach ($albums as $album) : ?>
 
-                            <option value="<?= $album["id"] ?>">
-                              <?= $album["name"] ?>
-                            </option>
-                          <?php endforeach; ?>
+                        <option value="<?= $album["id"] ?>">
+                          <?= $album["name"] ?>
+                        </option>
+                        <?php endforeach; ?>
 
-                        </select>
+                      </select>
                       <?php endif; ?>
 
                     </div>
@@ -115,7 +116,8 @@ include("../inc/leftnav.php");
                         <div class="col-sm-4">
                           <!-- text input -->
                           <div class="form-group">
-                            <input type="text" name="album_image_name[]" class="form-control" placeholder="Enter Image Name..." />
+                            <input type="text" name="album_image_name[]" class="form-control"
+                              placeholder="Enter Image Name..." />
                           </div>
                         </div>
 
@@ -126,7 +128,8 @@ include("../inc/leftnav.php");
                           </div>
                         </div>
                         <div class="col-sm-1">
-                          <div class="d-flex justify-content-center align-items-center galleryImagePreviewContainer" style="height: 38px; width: 41px">
+                          <div class="d-flex justify-content-center align-items-center galleryImagePreviewContainer"
+                            style="height: 38px; width: 41px">
                           </div>
                         </div>
                         <div class="col-sm-1">
@@ -193,30 +196,30 @@ include("../inc/footer.php")
 
 
 <script>
-  var albumsData = <?php echo $json_albums ?>;
+var albumsData = <?php echo $json_albums ?>;
 
-  $(document).ready(function() {
+$(document).ready(function() {
 
-    // Event listener for the year select element
-    $("#year_id").change(function() {
-      // Get the selected year_id
-      var year_id = $(this).val();
+  // Event listener for the year select element
+  $("#year_id").change(function() {
+    // Get the selected year_id
+    var year_id = $(this).val();
 
-      // Filter albums based on the selected year_id
-      var filteredAlbums = albumsData.filter((album) => album.year_id == year_id);
+    // Filter albums based on the selected year_id
+    var filteredAlbums = albumsData.filter((album) => album.year_id == year_id);
 
-      // // Log the filtered albums to the console
-      // console.log(filteredAlbums);
+    // // Log the filtered albums to the console
+    // console.log(filteredAlbums);
 
-      // Clear existing options in the album_id select element
-      $("#album_id").empty();
+    // Clear existing options in the album_id select element
+    $("#album_id").empty();
 
-      // Add new options based on the filtered albums
-      $("#album_id").append('<option value=""></option>');
-      $.each(filteredAlbums, function(index, album) {
-        $("#album_id").append('<option value="' + album.id + '">' + album.name + '</option>');
-      });
+    // Add new options based on the filtered albums
+    $("#album_id").append('<option value=""></option>');
+    $.each(filteredAlbums, function(index, album) {
+      $("#album_id").append('<option value="' + album.id + '">' + album.name + '</option>');
     });
+  });
 
 
 
@@ -224,48 +227,48 @@ include("../inc/footer.php")
 
 
 
-    // Add Image button click event
-    $("#addImageButton").click(function() {
-      var clonedField = $(".image-upload-field").first().clone();
-      $(".imageUploadFields").append(clonedField);
-      clonedField.find("input[type='text']").val("");
-      clonedField.find("input[type='file']").val("");
-      clonedField.find(".custom-file-label").text("Choose file"); // Reset the label text
-      clonedField.find(".galleryImagePreviewContainer").empty(); // Clear the image preview
-      clonedField.find(".delete-image-field").removeClass("d-none");
-    });
+  // Add Image button click event
+  $("#addImageButton").click(function() {
+    var clonedField = $(".image-upload-field").first().clone();
+    $(".imageUploadFields").append(clonedField);
+    clonedField.find("input[type='text']").val("");
+    clonedField.find("input[type='file']").val("");
+    clonedField.find(".custom-file-label").text("Choose file"); // Reset the label text
+    clonedField.find(".galleryImagePreviewContainer").empty(); // Clear the image preview
+    clonedField.find(".delete-image-field").removeClass("d-none");
+  });
 
-    // Delete Image button click event
-    $(document).on("click", ".delete-image-field", function() {
-      if ($(".image-upload-field").length > 1) {
-        $(this).closest(".image-upload-field").remove();
-      }
-    });
+  // Delete Image button click event
+  $(document).on("click", ".delete-image-field", function() {
+    if ($(".image-upload-field").length > 1) {
+      $(this).closest(".image-upload-field").remove();
+    }
+  });
 
-    // Add event listener for image input change
-    $(document).on('change', '.album_image1', function(event) {
-      const fileInput = $(this);
-      const file = $(this)[0].files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const imagePreviewContainer = fileInput.closest('.image-upload-field').find(
-            '.galleryImagePreviewContainer');
-          const imgElement = $('<img>').attr('src', e.target.result)
-            .addClass('img-fluid')
-            .css({
-              width: '38px',
-              height: '38px',
-              objectFit: 'cover'
-            });
-          imagePreviewContainer.empty(); // Clear previous image previews
-          imagePreviewContainer.append(imgElement);
-        };
-        reader.readAsDataURL(file);
+  // Add event listener for image input change
+  $(document).on('change', '.album_image1', function(event) {
+    const fileInput = $(this);
+    const file = $(this)[0].files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const imagePreviewContainer = fileInput.closest('.image-upload-field').find(
+          '.galleryImagePreviewContainer');
+        const imgElement = $('<img>').attr('src', e.target.result)
+          .addClass('img-fluid')
+          .css({
+            width: '38px',
+            height: '38px',
+            objectFit: 'cover'
+          });
+        imagePreviewContainer.empty(); // Clear previous image previews
+        imagePreviewContainer.append(imgElement);
+      };
+      reader.readAsDataURL(file);
 
-        // Update the label text with the filename
-        $(this).siblings('.custom-file-label').text(file.name);
-      }
-    });
-  })
+      // Update the label text with the filename
+      $(this).siblings('.custom-file-label').text(file.name);
+    }
+  });
+})
 </script>

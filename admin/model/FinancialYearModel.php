@@ -52,6 +52,17 @@ class FinancialYearModel
     }
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+  public function findAllActive()
+  {
+    $sql = "SELECT * FROM {$this->table_name} WHERE status='1' ORDER BY id DESC";
+    $stmt = $this->conn->prepare($sql);
+    $result = $stmt->execute();
+    if (!$result) {
+      echo "failed to fetch records from table $this->table_name";
+      exit;
+    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
 
 
   public  function createOne($data)

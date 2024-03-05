@@ -105,7 +105,7 @@ include("../inc/leftnav.php");
                     <div class="form-group  ">
                       <div class="form-check mr-5">
                         <input class="form-check-input" type="radio" name="status" required value="1"
-                          <?= ($yearData != null && $yearData["status"] == 1) ? "checked" : ""    ?>>
+                          <?= ($yearData != null && $yearData["status"] == 1) ? "checked" : "checked"    ?>>
                         <label class=" form-check-label">Active</label>
                       </div>
                       <div class="form-check">

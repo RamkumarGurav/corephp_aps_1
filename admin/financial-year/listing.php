@@ -1,5 +1,7 @@
 <?php
 session_start();
+$_SESSION['album_data'] = [];
+$_SESSION['gallery_data'] = [];
 if (!isset($_SESSION["user"])) {
   header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin");
   exit();
@@ -7,6 +9,8 @@ if (!isset($_SESSION["user"])) {
 
 include "../controller/Login.php";
 include "../controller/FinancialYear.php";
+
+$years_json = json_encode($years);
 
 include("../inc/header.php");
 include("../inc/leftnav.php");
@@ -52,12 +56,12 @@ include("../inc/leftnav.php");
               <a href="../financial-year/edit.php" type="button" class="btn btn-primary btn-sm">Add</a>
               <button type="button" class="btn btn-success btn-sm mx-2"
                 onclick="activateSelectedYears()">Active</button>
-              
-              
-                <button type="button" class="btn btn-danger btn-sm" onclick="blockSelectedYears()">Block</button>
-                <button type="button" class="btn btn-danger btn-sm mx-2" style="background-color:#FD7E14;"
-                  onclick="deleteSelectedYears()">Delete</button>
-              </div>
+
+
+              <button type="button" class="btn btn-danger btn-sm" onclick="blockSelectedYears()">Block</button>
+              <button type="button" class="btn btn-danger btn-sm mx-2" style="background-color:#FD7E14;"
+                onclick="deleteSelectedYears()">Delete</button>
+            </div>
             <div class="card-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -110,12 +114,14 @@ include("../inc/leftnav.php");
 <?php include("../inc/footer.php"); ?>
 
 <script>
-  var toastElementFE = $("#customToastFE");
+var toastElementFE = $("#customToastFE");
+var numOfYears = "<?php echo $years_count;  ?>";
+
 function getSelectedYears() {
   const selectedYears = [];
   document.querySelectorAll('.year-checkbox:checked').forEach(checkbox => {
     selectedYears.push(checkbox.value);
-  });
+  })
   return selectedYears;
 }
 
@@ -140,29 +146,29 @@ function activateSelectedYears() {
       },
       function(data, status) {
         if (status == "success") {
-            console.log(status);
-            // toastElementFE.removeClass("d-none");
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-success");
-              $("#customToastFEClose").after("successfully Activated");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
+          console.log(status);
+          // toastElementFE.removeClass("d-none");
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-success");
+            $("#customToastFEClose").after("successfully Activated");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
 
-          } else {
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-danger");
-              $("#customToastFEClose").after("Failed to Activate");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
-          }
+        } else {
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-danger");
+            $("#customToastFEClose").after("Failed to Activate");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
+        }
       });
   } else {
     alert('Please select at least one year to activate.');
@@ -177,29 +183,29 @@ function blockSelectedYears() {
       },
       function(data, status) {
         if (status == "success") {
-            console.log(status);
-            // toastElementFE.removeClass("d-none");
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-success");
-              $("#customToastFEClose").after("successfully Blocked");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
+          console.log(status);
+          // toastElementFE.removeClass("d-none");
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-success");
+            $("#customToastFEClose").after("successfully Blocked");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
 
-          } else {
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-danger");
-              $("#customToastFEClose").after("Failed to Block");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
-          }
+        } else {
+          setTimeout(function() {
+            toastElementFE.removeClass("d-none");
+            toastElementFE.addClass(" alert-danger");
+            $("#customToastFEClose").after("Failed to Block");
+          }, 300);
+          setTimeout(function() {
+            $('#customToastFEClose').alert("close");
+            location.reload();
+          }, 2500);
+        }
       });
   } else {
     alert('Please select at least one year to block.');
@@ -208,50 +214,105 @@ function blockSelectedYears() {
 
 function deleteSelectedYears() {
   const selectedYears = getSelectedYears();
-  if (selectedYears.length > 0) {
-    // Show a confirmation dialog
-    if (confirm("Are you sure you want to delete selected years?")) {
-      // User confirmed deletion, proceed with the deletion
-      $.post("../controller/FinancialYear.php?fy_action=delete", {
-          ids: selectedYears
-        },
-        function(data, status) {
-          if (status == "success") {
-            console.log(status);
-            // toastElementFE.removeClass("d-none");
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-success");
-              $("#customToastFEClose").after("successfully Deleted");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
 
-          } else {
-            setTimeout(function() {
-              toastElementFE.removeClass("d-none");
-              toastElementFE.addClass(" alert-danger");
-              $("#customToastFEClose").after("Failed to Delete");
-            }, 300);
-            setTimeout(function() {
-              $('#customToastFEClose').alert("close");
-              location.reload();
-            }, 2500);
-          }
-        }
-      );
+  // const selctedYearsArr = selectedYears.split(",");
+  if (selectedYears.length > 0) {
+
+
+
+
+
+
+    if (selectedYears.length == numOfYears) {
+      const proceed = prompt("Type 'proceed to delete all', To proceed with deleting all selected Years:");
+      if (proceed === "proceed to delete all") {
+        // User confirmed deletion, proceed with the deletion
+        $.post("../controller/FinancialYear.php?fy_action=delete", {
+            ids: selectedYears
+          },
+          function(data, status) {
+            if (status == "success") {
+              console.log(status);
+              // toastElementFE.removeClass("d-none");
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-success");
+                $("#customToastFEClose").after("successfully Deleted");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+            } else {
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-danger");
+                $("#customToastFEClose").after("Failed to Delete");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+            }
+          });
+      } else {
+        // User did not type 'PROCEED TO DELETE ALL', so cancel deletion
+        document.querySelectorAll('.year-checkbox:checked').forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        // Deselect the "Select All" checkbox
+        document.querySelector('.all-years-checkbox').checked = false;
+        alert("Deletion canceled. You Didn't type correctly Try Again.");
+
+      }
     } else {
-      // User cancelled deletion, deselect checkboxes
-      document.querySelectorAll('.year-checkbox:checked').forEach(checkbox => {
-        checkbox.checked = false;
-      });
-      // Deselect the "Select All" checkbox
-      document.querySelector('.all-years-checkbox').checked = false;
+
+      if (confirm("Are you sure you want to delete selected years?")) {
+        // Prompt user for secondary confirmation
+
+        // User confirmed deletion, proceed with the deletion
+        $.post("../controller/FinancialYear.php?fy_action=delete", {
+            ids: selectedYears
+          },
+          function(data, status) {
+            if (status == "success") {
+              console.log(status);
+              // toastElementFE.removeClass("d-none");
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-success");
+                $("#customToastFEClose").after("successfully Deleted");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+            } else {
+              setTimeout(function() {
+                toastElementFE.removeClass("d-none");
+                toastElementFE.addClass(" alert-danger");
+                $("#customToastFEClose").after("Failed to Delete");
+              }, 300);
+              setTimeout(function() {
+                $('#customToastFEClose').alert("close");
+                location.reload();
+              }, 2500);
+            }
+          });
+
+      } else {
+        // User cancelled deletion, deselect checkboxes
+        document.querySelectorAll('.year-checkbox:checked').forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        // Deselect the "Select All" checkbox
+        document.querySelector('.all-years-checkbox').checked = false;
+      }
     }
   } else {
     alert('Please select at least one year  to delete.');
   }
 }
+
+
 </script>
