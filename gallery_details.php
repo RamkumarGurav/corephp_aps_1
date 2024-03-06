@@ -190,12 +190,14 @@ if (!empty($_SERVER['QUERY_STRING'])) {
           <span><?= $fe_year_details['fiscal_year'] ?> </span>
         </h2>
         <span class="border_line  text-left  animated wow slideInUp"></span>
-        <div class="row">
 
-          <?php if (empty($fe_gallery_images)) : ?>
-          <p>Empty</p>
-          <?php else : ?>
+
+        <?php if (empty($fe_gallery_images)) : ?>
+        <p>Empty</p>
+        <?php else : ?>
+        <div class="row">
           <?php foreach ($fe_gallery_images as $fe_gallery_image) : ?>
+          <?php if ($fe_gallery_image['type'] == '1') : ?>
           <div class="events_col2  animated wow slideInUp">
             <div class="events_colw">
               <div class="events_imag">
@@ -209,13 +211,45 @@ if (!empty($_SERVER['QUERY_STRING'])) {
               </div>
             </div>
           </div>
-          <?php endforeach; ?>
           <?php endif; ?>
 
-
-
-
+          <?php endforeach; ?>
         </div>
+
+
+        <div class="row">
+
+          <?php foreach ($fe_gallery_images as $fe_gallery_image) : ?>
+          <?php if ($fe_gallery_image['type'] == '0') : ?>
+          <div class="col-md-6">
+            <iframe width="100%" height="415"
+              src="<?= "https://www.youtube.com/embed/{$fe_gallery_image['album_image']}" ?>"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+          <!-- <div class="col-md-6">
+            <iframe width="100%" height="415" src="https://www.youtube.com/embed/9D7iKwQySCE"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div> -->
+          <?php endif; ?>
+
+          <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
       </div>
 
     </div>

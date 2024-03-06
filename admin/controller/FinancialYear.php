@@ -3,7 +3,7 @@
 
 $root_path = str_replace("\\", "/", dirname(dirname(__DIR__)));
 require_once $root_path . "/admin/model/FinancialYearModel.php";
-$base_url = "http://localhost/xampp/MARS/appolopublicschool.com";
+$base_url = "http://localhost/xampp/MARS/appolopublicschool.com/";
 $current_path = $_SERVER['REQUEST_URI'];
 
 class FinancialYear
@@ -49,7 +49,8 @@ class FinancialYear
     if ($this->model->findOneByColumnName("fiscal_year", $data["fiscal_year"]) != false) {
       $_SESSION["toast_message"] = "This financial year already exists";
       $_SESSION["toast_type"] = "alert-danger";
-      header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/financial-year/edit.php");
+      global $base_url;
+      header("Location: {$base_url}admin/financial-year/edit.php");
       exit;
     } else {
       $id = $this->model->createOne($data);
@@ -58,13 +59,15 @@ class FinancialYear
 
         $_SESSION["toast_message"] = "Unable to Create Financial Year.";
         $_SESSION["toast_type"] = "alert-danger";
-        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/financial-year/edit.php");
+        global $base_url;
+        header("Location: {$base_url}admin/financial-year/edit.php");
         exit;
       } else {
 
         $_SESSION["toast_message"] = "Successfully Created Financial Year";
         $_SESSION["toast_type"] = "alert-success";
-        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/financial-year/listing.php");
+        global $base_url;
+        header("Location: {$base_url}admin/financial-year/listing.php");
         exit;
       }
     }
@@ -80,13 +83,15 @@ class FinancialYear
 
       $_SESSION["toast_message"] = "Unable to Update Financial Year.";
       $_SESSION["toast_type"] = "alert-danger";
-      header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/financial-year/edit.php");
+      global $base_url;
+      header("Location: {$base_url}admin/financial-year/edit.php");
       exit;
     } else {
 
       $_SESSION["toast_message"] = "Successfully Updated Financial Year";
       $_SESSION["toast_type"] = "alert-success";
-      header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/financial-year/listing.php");
+      global $base_url;
+      header("Location: {$base_url}admin/financial-year/listing.php");
       exit;
     }
   }

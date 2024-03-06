@@ -1,4 +1,4 @@
-<?php $base_url = "http://localhost/xampp/MARS/appolopublicschool.com";  ?>
+<?php $base_url = "http://localhost/xampp/MARS/appolopublicschool.com/";  ?>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -1,9 +1,9 @@
 <?php
 
 
-$path = str_replace("\\", "/", dirname(__DIR__));
-require_once $path . "/model/LoginModel.php";
-$base_url = "http://localhost/xampp/MARS/appolopublicschool.com";
+$root_path = str_replace("\\", "/", dirname(dirname(__DIR__)));
+require_once $root_path . "/admin/model/LoginModel.php";
+$base_url = "http://localhost/xampp/MARS/appolopublicschool.com/";
 
 
 class Login
@@ -23,8 +23,10 @@ class Login
       // $error_msg = "Invalid email or password. Please try again.";
       $_SESSION["toast_message"] = "Invalid email or password. Please try again.";
       $_SESSION["toast_type"] = "text-bg-danger";
+
+      global $base_url;
       // Redirect the user to the welcome page after successfully adding album photos
-      header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/index.php");
+      header("Location: {$base_url}admin/index.php");
       exit();
     } else {
 
@@ -33,8 +35,10 @@ class Login
       $_SESSION["toast_message"] = "Successfully Logged";
       $_SESSION["toast_type"] = "alert-success";
 
+
+      global $base_url;
       // Redirect the user to the welcome page after successfully adding album photos
-      header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/dashboard/dashboard.php");
+      header("Location: {$base_url}admin/dashboard/dashboard.php");
       exit();
     }
   }
@@ -47,8 +51,10 @@ class Login
     session_destroy();
     session_start();
     $_SESSION["toast_message"] = "Successfully Logged Out";
+
+    global $base_url;
     $_SESSION["toast_type"] = "alert-success";
-    header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/index.php");
+    header("Location: {$base_url}admin/index.php");
     exit();
   }
 

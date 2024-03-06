@@ -1,13 +1,13 @@
 <?php
+$base_url = "http://localhost/xampp/MARS/appolopublicschool.com/";
 
 session_start();
 $_SESSION['album_data'] = [];
 $_SESSION['gallery_data'] = [];
 if (!isset($_SESSION["user"])) {
-  header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin");
+  header("Location: {$base_url}admin");
   exit();
 }
-
 
 
 
@@ -440,98 +440,101 @@ function deleteSelectedAlbums() {
   const selectedAlbums = getSelectedAlbums();
 
   if (selectedAlbums.length > 0) {
+    if (confirm("Are you sure you want to delete selected albums?")) {
+      if (selectedAlbums.length == numOfAlbums) {
+        const proceed = prompt('Type "confirm delete all", To proceed with deleting all selected albums:');
+        if (proceed === "confirm delete all") {
+          // User confirmed deletion, proceed with the deletion
+          $.post("../controller/Album.php?album_action=delete", {
+              ids: selectedAlbums
+            },
+            function(data, status) {
+              if (status == "success") {
+                console.log(status);
+                // toastElementFE.removeClass("d-none");
+                setTimeout(function() {
+                  toastElementFE.removeClass("d-none");
+                  toastElementFE.addClass(" alert-success");
+                  $("#customToastFEClose").after("successfully Deleted");
+                }, 300);
+                setTimeout(function() {
+                  $('#customToastFEClose').alert("close");
+                  location.reload();
+                }, 2500);
 
-    if (selectedAlbums.length == numOfAlbums) {
-      const proceed = prompt("type 'proceed to delete all', To proceed with deleting all selected albums:");
-      if (proceed === "proceed to delete all") {
-        // User confirmed deletion, proceed with the deletion
-        $.post("../controller/Album.php?album_action=delete", {
-            ids: selectedAlbums
-          },
-          function(data, status) {
-            if (status == "success") {
-              console.log(status);
-              // toastElementFE.removeClass("d-none");
-              setTimeout(function() {
-                toastElementFE.removeClass("d-none");
-                toastElementFE.addClass(" alert-success");
-                $("#customToastFEClose").after("successfully Deleted");
-              }, 300);
-              setTimeout(function() {
-                $('#customToastFEClose').alert("close");
-                location.reload();
-              }, 2500);
+              } else {
+                setTimeout(function() {
+                  toastElementFE.removeClass("d-none");
+                  toastElementFE.addClass(" alert-danger");
+                  $("#customToastFEClose").after("Failed to Delete");
+                }, 300);
+                setTimeout(function() {
+                  $('#customToastFEClose').alert("close");
+                  location.reload();
+                }, 2500);
+              }
+            });
+        } else {
 
-            } else {
-              setTimeout(function() {
-                toastElementFE.removeClass("d-none");
-                toastElementFE.addClass(" alert-danger");
-                $("#customToastFEClose").after("Failed to Delete");
-              }, 300);
-              setTimeout(function() {
-                $('#customToastFEClose').alert("close");
-                location.reload();
-              }, 2500);
-            }
-          });
+          alert("Deletion canceled. You Didn't type correctly Try Again.");
+          // // Deselect the "Select All" checkbox
+
+          location.reload();
+
+        }
+
       } else {
 
-        alert("Deletion canceled. You Didn't type correctly Try Again.");
-        // // Deselect the "Select All" checkbox
 
-        location.reload();
+        // Prompt user for secondary confirmation
+        const proceed = prompt('Type "confirm delete", To proceed with deleting the selected Albums:');
+        if (proceed === "confirm delete") {
+          // User confirmed deletion, proceed with the deletion
+          $.post("../controller/Album.php?album_action=delete", {
+              ids: selectedAlbums
+            },
+            function(data, status) {
+              if (status == "success") {
+                console.log(status);
+                // toastElementFE.removeClass("d-none");
+                setTimeout(function() {
+                  toastElementFE.removeClass("d-none");
+                  toastElementFE.addClass(" alert-success");
+                  $("#customToastFEClose").after("successfully Deleted");
+                }, 300);
+                setTimeout(function() {
+                  $('#customToastFEClose').alert("close");
+                  location.reload();
+                }, 2500);
+
+              } else {
+                setTimeout(function() {
+                  toastElementFE.removeClass("d-none");
+                  toastElementFE.addClass(" alert-danger");
+                  $("#customToastFEClose").after("Failed to Delete");
+                }, 300);
+                setTimeout(function() {
+                  $('#customToastFEClose').alert("close");
+                  location.reload();
+                }, 2500);
+              }
+            }
+          );
+        } else {
+          alert("Deletion canceled. You Didn't type correctly Try Again.");
+          // // Deselect the "Select All" checkbox
+          location.reload();
+        }
 
       }
 
     } else {
-
-      if (confirm("Are you sure you want to delete selected albums?")) {
-        // Prompt user for secondary confirmation
-
-        // User confirmed deletion, proceed with the deletion
-        $.post("../controller/Album.php?album_action=delete", {
-            ids: selectedAlbums
-          },
-          function(data, status) {
-            if (status == "success") {
-              console.log(status);
-              // toastElementFE.removeClass("d-none");
-              setTimeout(function() {
-                toastElementFE.removeClass("d-none");
-                toastElementFE.addClass(" alert-success");
-                $("#customToastFEClose").after("successfully Deleted");
-              }, 300);
-              setTimeout(function() {
-                $('#customToastFEClose').alert("close");
-                location.reload();
-              }, 2500);
-
-            } else {
-              setTimeout(function() {
-                toastElementFE.removeClass("d-none");
-                toastElementFE.addClass(" alert-danger");
-                $("#customToastFEClose").after("Failed to Delete");
-              }, 300);
-              setTimeout(function() {
-                $('#customToastFEClose').alert("close");
-                location.reload();
-              }, 2500);
-            }
-          }
-        );
-
-      } else {
-        // Deselect the "Select All" checkbox
-
-        location.reload();
-
-      }
+      location.reload();
     }
   } else {
     alert('Please select at least one album  to delete.');
   }
 }
-
 
 
 

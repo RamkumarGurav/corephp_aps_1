@@ -6,7 +6,7 @@ class GalleryModel
 {
 
 
-  private $conn;
+  public $conn;
 
   public $table_name = "image";
 
@@ -182,9 +182,54 @@ class GalleryModel
   //   }
   // }
 
+  public function createOneAlbumImage($data)
+  {
+
+
+
+    // Perform the album creation
+    $columns = implode(",", array_keys($data));
+    $placeholders = implode(",", array_fill(0, count($data), "?"));
+    $sql = "INSERT INTO {$this->table_name} ($columns) VALUES($placeholders)";
+    $stmt = $this->conn->prepare($sql);
+
+    $i = 1;
+    foreach ($data as $value) {
+      $type = PDO::PARAM_STR; // Default type is string
+      if (is_bool($value)) {
+        $type = PDO::PARAM_BOOL;
+      } elseif (is_int($value)) {
+        $type = PDO::PARAM_INT;
+      } elseif (is_null($value)) {
+        $type = PDO::PARAM_NULL;
+      }
+      $stmt->bindValue($i, $value, $type);
+      $i++;
+    }
+
+    if ($stmt->execute()) {
+      $lastInsertedId = $this->conn->lastInsertId();
+      if ($data['type'] == 1) {
+        $isUpdated = $this->updateOneByColumnName("id", $lastInsertedId, ['image_order' => $lastInsertedId]); // Corrected column name to 'position'
+
+      } else {
+        $isUpdated = $this->updateOneByColumnName("id", $lastInsertedId, ['image_order' => 0]); // Corrected column name to 'position'
+
+      }
+      if ($isUpdated) {
+        return $lastInsertedId;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
 
   public function createOne($data)
   {
+
     // Start a transaction
     $this->conn->beginTransaction();
 

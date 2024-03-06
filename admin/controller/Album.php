@@ -3,7 +3,8 @@
 
 $root_path = str_replace("\\", "/", dirname(dirname(__DIR__)));
 require_once $root_path . "/admin/model/AlbumModel.php";
-// include("FinancialYear.php");
+
+$base_url = "http://localhost/xampp/MARS/appolopublicschool.com/";
 
 $current_path = $_SERVER['REQUEST_URI'];
 class Album
@@ -70,7 +71,8 @@ class Album
         $_SESSION["album_data"] = $data;
         $_SESSION["toast_message"] = "Only PNG, JPEG, and JPG Image types are allowed.";
         $_SESSION["toast_type"] = "alert-danger";
-        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+        global $base_url;
+        header("Location: {$base_url}admin/album/edit.php");
         exit;
       } elseif ($file_size > $max_file_size) {
         // File size exceeds the limit
@@ -79,13 +81,15 @@ class Album
         $_SESSION["album_data"] = $data;
         $_SESSION["toast_message"] = "Image size should not exceed 2MB.";
         $_SESSION["toast_type"] = "alert-danger";
-        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+        global $base_url;
+        header("Location: {$base_url}admin/album/edit.php");
         exit;
-      } elseif ($width < 1000 || $height < 1000) {
+      } elseif ($width < 650 || $height < 400) {
         $_SESSION["album_data"] = $data;
-        $_SESSION["toast_message"] = "Minimum image dimensions required is 1000 X 1000 pixels";
+        $_SESSION["toast_message"] = "Minimum image dimensions required is 650 X 400 pixels";
         $_SESSION["toast_type"] = "alert-danger";
-        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+        global $base_url;
+        header("Location: {$base_url}admin/album/edit.php");
         exit;
       } else {
 
@@ -117,7 +121,8 @@ class Album
             } else {
               $_SESSION["toast_message"] = "Unable find the Year";
               $_SESSION["toast_type"] = "alert-danger";
-              header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+              global $base_url;
+              header("Location: {$base_url}admin/album/edit.php");
               exit;
             }
 
@@ -134,7 +139,8 @@ class Album
             if ($movedImageName == false) {
               $_SESSION["toast_message"] = "Album created successfully but failed to add the cover image";
               $_SESSION["toast_type"] = "alert-danger";
-              header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+              global $base_url;
+              header("Location: {$base_url}admin/album/edit.php");
               exit;
             }
             // Prepare data for updating the album table with the cover image name
@@ -148,7 +154,8 @@ class Album
               // Display error message if the table update failed
               $_SESSION["toast_message"] = "Album created successfully but failed to add the cover image";
               $_SESSION["toast_type"] = "alert-danger";
-              header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+              global $base_url;
+              header("Location: {$base_url}admin/album/edit.php");
               exit;
             }
           }
@@ -156,12 +163,14 @@ class Album
           $_SESSION["toast_type"] = "alert-success";
 
           // Redirect the user to the welcome page after successful album creation
-          header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/listing.php");
+          global $base_url;
+          header("Location: {$base_url}admin/album/listing.php");
           exit();
         } else {
           $_SESSION["toast_message"] = "Failed to create the Album";
           $_SESSION["toast_type"] = "alert-danger";
-          header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
+          global $base_url;
+          header("Location: {$base_url}admin/album/edit.php");
           exit;
         }
       }
@@ -200,7 +209,8 @@ class Album
         $_SESSION["album_data"] = $data;
         $_SESSION["toast_message"] = "Only PNG, JPEG, and JPG Image types are allowed.";
         $_SESSION["toast_type"] = "alert-danger";
-        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID=$id");
+        global $base_url;
+        header("Location: {$base_url}admin/album/edit.php?albumID=$id");
         exit;
       } elseif ($file_size > $max_file_size) {
         // File size exceeds the limit
@@ -209,11 +219,12 @@ class Album
         $_SESSION["album_data"] = $data;
         $_SESSION["toast_message"] = "Image size should not exceed 2MB.";
         $_SESSION["toast_type"] = "alert-danger";
-        header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php?albumID=$id");
+        global $base_url;
+        header("Location: {$base_url}admin/album/edit.php?albumID=$id");
         exit;
-      } elseif ($width < 1000 || $height < 1000) {
+      } elseif ($width < 650 || $height < 400) {
         $_SESSION["album_data"] = $data;
-        $_SESSION["toast_message"] = "Minimum image dimensions required is 1000 X 1000 pixels";
+        $_SESSION["toast_message"] = "Minimum image dimensions required is 650 X 400 pixels";
         $_SESSION["toast_type"] = "alert-danger";
         header("Location: http://localhost/xampp/MARS/appolopublicschool.com/admin/album/edit.php");
         exit;
@@ -379,6 +390,7 @@ class Album
               global $root_path;
               $root_uploads_folder = $root_path . "/uploads";
               $cover_image_path = $root_uploads_folder . "/album/{$yearData['fiscal_year']}/cover_images/" . $cover_image;
+              $original_cover_image_path = $root_uploads_folder . "/album/{$yearData['fiscal_year']}/cover_images/original/" . $cover_image;
 
 
               if (file_exists($cover_image_path)) {
@@ -386,15 +398,25 @@ class Album
 
                 unlink($cover_image_path); // Delete the image file
               }
+              if (file_exists($original_cover_image_path)) {
+                // var_dump($cover_image_path);
+
+                unlink($original_cover_image_path); // Delete the image file
+              }
 
               //Deleting the all the album images of the of the above deleted "album"
               foreach ($albumImagesNamesArr as $image) {
                 // var_dump($image);
                 $root_uploads_folder = $root_path . "/uploads";
-                $cover_image_path = $root_uploads_folder . "/album/{$yearData['fiscal_year']}/album_images/" . $image;
-                if (file_exists($cover_image_path)) {
+                $album_image_path = $root_uploads_folder . "/album/{$yearData['fiscal_year']}/album_images/" . $image;
+                $original_album_image_path = $root_uploads_folder . "/album/{$yearData['fiscal_year']}/album_images/original/" . $image;
+                if (file_exists($album_image_path)) {
                   // var_dump($cover_image_path);
-                  unlink($cover_image_path); // Delete the image file
+                  unlink($album_image_path); // Delete the image file
+                }
+                if (file_exists($original_album_image_path)) {
+                  // var_dump($cover_image_path);
+                  unlink($original_album_image_path); // Delete the image file
                 }
               }
             }
@@ -414,7 +436,7 @@ class Album
       exit();
     }
   }
-  public  function moveImageToFolder($id, $fy, $file_name, $file_tmp, $root_uplaods_folder, $destination_folder)
+  public  function moveImageToFolderX($id, $fy, $file_name, $file_tmp, $root_uplaods_folder, $destination_folder)
   {
     // Check if the "uploads" folder exists, if not, create it
     if (!file_exists($root_uplaods_folder)) {
@@ -474,7 +496,9 @@ class Album
     return false;
   }
 
-  public function moveImageToFolderX($id, $fy, $file_name, $file_tmp, $root_uplaods_folder, $destination_folder)
+
+
+  public function moveImageToFolder($id, $fy, $file_name, $file_tmp, $root_uplaods_folder, $destination_folder)
   {
     // Check if the "uploads" folder exists, if not, create it
     if (!file_exists($root_uplaods_folder)) {
@@ -499,75 +523,82 @@ class Album
       mkdir($cover_images_folder);
     }
 
+    // Create "cover_images/original" folder inside the "fiscal_year" folder
+    $original_cover_images_folder = $cover_images_folder . "/original";
+    if (!file_exists($original_cover_images_folder)) {
+      mkdir($original_cover_images_folder);
+    }
+
     // Create "album_images" folder inside the "fiscal_year" folder
     $album_images_folder = $fiscal_year_folder . "/album_images";
     if (!file_exists($album_images_folder)) {
       mkdir($album_images_folder);
     }
 
-    // Define dimensions for different devices
-    $sizes = array(
-      "sm" => array("width" => 320, "height" => 240),  // For smaller devices (e.g., mobiles)
-      "md" => array("width" => 768, "height" => 576),  // For medium devices (e.g., tablets)
-      "lg" => array("width" => 1024, "height" => 768)  // For larger devices (e.g., desktops)
-    );
-
-    // Get file extension
-    $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
-
-    // Loop through each size and resize the image
-    foreach ($sizes as $size => $dimensions) {
-      // Create directory for this size if it doesn't exist
-      $size_folder = $cover_images_folder . '/' . $size;
-      if (!file_exists($size_folder)) {
-        mkdir($size_folder, 0777, true); // Create directory with permissions 0777 (read, write, execute for owner, group, and others) and create intermediate directories as needed
-      }
-
-      // Create a true color image for resizing
-      $resized_image = imagecreatetruecolor($dimensions["width"], $dimensions["height"]);
-
-      // Create an image resource from the uploaded file
-      $source_image = imagecreatefromstring(file_get_contents($file_tmp));
-
-      // Get the original width and height of the image
-      $width_orig = imagesx($source_image);
-      $height_orig = imagesy($source_image);
-
-      // Calculate the original aspect ratio
-      $ratio_orig = $width_orig / $height_orig;
-
-      // Calculate dimensions for resizing while preserving aspect ratio
-      if ($dimensions["width"] / $dimensions["height"] > $ratio_orig) {
-        $dimensions["width"] = $dimensions["height"] * $ratio_orig;
-      } else {
-        $dimensions["height"] = $dimensions["width"] / $ratio_orig;
-      }
-
-      // Resize the image and save it to the resized image resource
-      imagecopyresampled($resized_image, $source_image, 0, 0, 0, 0, $dimensions["width"], $dimensions["height"], $width_orig, $height_orig);
-
-      // Generate a new filename based on the original image ID and the current size
-      $new_filename = $id  . '.' . $file_extension;
-
-      // Define the path to save the resized image
-      $image_path = $size_folder . '/' . $new_filename;
-
-      // Determine the appropriate image format based on the original extension
-      switch ($file_extension) {
-        case 'png':
-          imagepng($resized_image, $image_path); // Save as PNG format
-          break;
-        case 'jpg':
-        case 'jpeg':
-          imagejpeg($resized_image, $image_path); // Save as JPEG format
-          break;
-        default:
-          // Unsupported image format, handle appropriately (here we assume PNG)
-          imagepng($resized_image, $image_path); // Save as PNG format
-      }
+    // Create "album_images/original" folder inside the "fiscal_year" folder
+    $original_album_images_folder = $album_images_folder . "/original";
+    if (!file_exists($original_album_images_folder)) {
+      mkdir($original_album_images_folder);
     }
 
-    // Return the filename of the resized image
+    // Generate a new filename based on the original image ID and the current size
+    $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+    $new_filename = $id  . '.' . $file_extension;
+
+    // Define the path to save the original image
+    $original_image_path = null;
+    $cropped_image_folder = null;
+
+    if ($destination_folder == "cover_images") {
+      $original_image_path = $original_cover_images_folder . '/' . $new_filename;
+      $cropped_image_folder = $cover_images_folder;
+    } elseif ($destination_folder == "album_images") {
+      $original_image_path = $original_album_images_folder . '/' . $new_filename;
+      $cropped_image_folder = $cover_images_folder;
+    }
+
+    // Save the original image to the "original" folder
+    move_uploaded_file($file_tmp, $original_image_path);
+
+    // Get the dimensions of the original image
+    list($width_orig, $height_orig) = getimagesize($original_image_path);
+
+    // Calculate dimensions for resizing while preserving aspect ratio
+    $aspect_ratio = $width_orig / $height_orig;
+    $new_width = 650;
+    $new_height = $new_width / $aspect_ratio;
+
+    // Create a true color image for cropping
+    $cropped_image = imagecreatetruecolor($new_width, $new_height);
+
+    // Create an image resource from the original image
+    $source_image = imagecreatefromstring(file_get_contents($original_image_path));
+
+    // Crop the image to the desired dimensions while preserving aspect ratio
+    $success = imagecopyresampled($cropped_image, $source_image, 0, 0, 0, 0, $new_width, $new_height, $width_orig, $height_orig);
+
+    // Define the path to save the cropped image
+    $cropped_image_path = $cropped_image_folder . '/' . $new_filename;
+
+    // Determine the appropriate image format based on the original extension
+    switch ($file_extension) {
+      case 'png':
+        imagepng($cropped_image, $cropped_image_path); // Save as PNG format
+        break;
+      case 'jpg':
+      case 'jpeg':
+        imagejpeg($cropped_image, $cropped_image_path); // Save as JPEG format
+        break;
+      default:
+        // Unsupported image format, handle appropriately (here we assume PNG)
+        imagepng($cropped_image, $cropped_image_path); // Save as PNG format
+    }
+
+    // Destroy the image resources to free up memory
+    imagedestroy($cropped_image);
+    imagedestroy($source_image);
+
+    // Return the filename of the cropped image
     return $new_filename;
   }
 }
@@ -580,7 +611,8 @@ $albums = null;
 $fyID = null;
 $json_albums = null;
 $numOfAlbums = null;
-
+$albums = $album_controller->findAll();
+$numOfAlbums = count($albums);
 
 
 if (strpos($current_path, "album/listing.php") != false) {

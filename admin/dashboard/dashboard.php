@@ -1,13 +1,17 @@
 <?php
 
+$base_url = "http://localhost/xampp/MARS/appolopublicschool.com/";
+
 session_start();
 if (!isset($_SESSION["user"])) {
-  header("Location: http://localhost/xampp/MARS/testproject/admin");
+  header("Location: {$base_url}admin");
   exit();
 }
 
-$base_url = "http://localhost/xampp/MARS/appolopublicschool.com";
 
+require  "../controller/FinancialYear.php";
+require  "../controller/Album.php";
+require  "../controller/Gallery.php";
 require  "../controller/Login.php";
 
 
@@ -45,55 +49,63 @@ include("../inc/leftnav.php");
   <section class="content">
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
+      <div class="row"></div>
+
+      <!-- /.row -->
+      <!-- Small boxes (Stat box) -->
       <div class="row">
+
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-danger">
+            <div class="inner p-3">
+              <h3><?= $years_count; ?></h3>
+
+              <p class="">Total Financial Years</p>
+
+            </div>
+
+            <div class="icon">
+              <!-- <i class="ion ion-person-add"></i> -->
+            </div>
+            <a href="../financial-year/listing.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
         <div class="col-lg-3 col-6">
           <!-- small box -->
           <div class="small-box bg-info">
-            <div class="inner">
-              <h3>150</h3>
+            <div class="inner p-3">
+              <h3><?= $numOfAlbums; ?></h3>
 
               <p>Total Albums</p>
             </div>
             <div class="icon">
               <!-- <i class="ion ion-bag"></i> -->
-              <i class="fa-solid fa-image"></i>
+              <!-- <i class="fa-solid fa-image"></i> -->
               <!-- <i class="ion images-outline"></i> -->
               <!-- <ion-icon name="images-outline"></ion-icon> -->
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="../album/listing.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-6">
           <!-- small box -->
           <div class="small-box bg-success">
-            <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+            <div class="inner p-3">
+              <h3><?= $num_of_album_images ?></h3>
 
-              <p>Total Images</p>
+              <p>Total Images/Videos</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <!-- <i class="ion ion-stats-bars"></i> -->
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="../gallery/listing.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-warning">
-            <div class="inner">
-              <h3>44</h3>
 
-              <p>Total Financial Years</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
 
         <!-- ./col -->
       </div>
