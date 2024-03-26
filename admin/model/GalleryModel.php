@@ -8,13 +8,14 @@ class GalleryModel
 
   public $conn;
 
-  public $table_name = "image";
+  public $table_name = "aps_images";
 
   public function __construct()
   {
     $path = substr(str_replace("\\", "/", dirname(__DIR__)), 0, -6);
 
-    $this->conn = require $path . "/config.php";;
+    $this->conn = require $path . "/config.php";
+    ;
   }
 
   public function findOneByColumnName($columnName, $columnValue)
@@ -74,7 +75,7 @@ class GalleryModel
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (count($data) > 0) {
-      return   $data;
+      return $data;
     } else {
       return false;
     }
@@ -91,7 +92,7 @@ class GalleryModel
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (count($data) > 0) {
-      return   $data;
+      return $data;
     } else {
       return false;
     }
@@ -116,8 +117,8 @@ class GalleryModel
 
 
 
-    if (!empty($data)) {
-      return   $data;
+    if (!empty ($data)) {
+      return $data;
     } else {
       return false;
     }
@@ -140,8 +141,8 @@ class GalleryModel
 
 
 
-    if (!empty($data)) {
-      return   $data;
+    if (!empty ($data)) {
+      return $data;
     } else {
       return false;
     }
@@ -300,7 +301,7 @@ class GalleryModel
     // Iterate over the new order of album IDs
     foreach ($albumImagesIdsArr as $i => $albumImageId) {
       // Update the order of the album with the corresponding order from $orderArr
-      $album_image_order = isset($orderArr[$i]) ? $orderArr[$i] : null;
+      $album_image_order = isset ($orderArr[$i]) ? $orderArr[$i] : null;
       if ($album_image_order !== null) {
         $sql = "UPDATE {$this->table_name} SET image_order=$album_image_order WHERE id=$albumImageId";
         echo "  $sql <br>";

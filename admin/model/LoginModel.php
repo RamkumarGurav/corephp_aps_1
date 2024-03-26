@@ -10,13 +10,14 @@ class LoginModel
 
   private $db_conn;
 
-  public $table_name = "user";
+  public $table_name = "aps_users";
 
   public function __construct()
   {
     $path = substr(str_replace("\\", "/", dirname(__DIR__)), 0, -6);
 
-    $this->db_conn = require $path . "/config.php";;
+    $this->db_conn = require $path . "/config.php";
+    ;
   }
 
   public function findUser($email, $password)

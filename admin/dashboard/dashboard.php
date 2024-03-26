@@ -3,24 +3,24 @@
 $base_url = "http://localhost/xampp/MARS/appolopublicschool.com/";
 
 session_start();
-if (!isset($_SESSION["user"])) {
+if (!isset ($_SESSION["user"])) {
   header("Location: {$base_url}admin");
   exit();
 }
 
 
-require  "../controller/FinancialYear.php";
-require  "../controller/Album.php";
-require  "../controller/Gallery.php";
-require  "../controller/Login.php";
+require "../controller/FinancialYear.php";
+require "../controller/Album.php";
+require "../controller/Gallery.php";
+require "../controller/Login.php";
 
 
 
-include("../inc/header.php");
+include ("../inc/header.php");
 
 
 
-include("../inc/leftnav.php");
+include ("../inc/leftnav.php");
 
 ?>
 
@@ -59,7 +59,9 @@ include("../inc/leftnav.php");
           <!-- small box -->
           <div class="small-box bg-danger">
             <div class="inner p-3">
-              <h3><?= $years_count; ?></h3>
+              <h3>
+                <?= $years_count; ?>
+              </h3>
 
               <p class="">Total Financial Years</p>
 
@@ -68,7 +70,8 @@ include("../inc/leftnav.php");
             <div class="icon">
               <!-- <i class="ion ion-person-add"></i> -->
             </div>
-            <a href="../financial-year/listing.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="../financial-year/listing.php" class="small-box-footer">More info <i
+                class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -76,7 +79,9 @@ include("../inc/leftnav.php");
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner p-3">
-              <h3><?= $numOfAlbums; ?></h3>
+              <h3>
+                <?= $numOfAlbums; ?>
+              </h3>
 
               <p>Total Albums</p>
             </div>
@@ -86,7 +91,8 @@ include("../inc/leftnav.php");
               <!-- <i class="ion images-outline"></i> -->
               <!-- <ion-icon name="images-outline"></ion-icon> -->
             </div>
-            <a href="../album/listing.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="../album/listing.php" class="small-box-footer">More info <i
+                class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -94,14 +100,17 @@ include("../inc/leftnav.php");
           <!-- small box -->
           <div class="small-box bg-success">
             <div class="inner p-3">
-              <h3><?= $num_of_album_images ?></h3>
+              <h3>
+                <?= $num_of_album_images ?>
+              </h3>
 
               <p>Total Images/Videos</p>
             </div>
             <div class="icon">
               <!-- <i class="ion ion-stats-bars"></i> -->
             </div>
-            <a href="../gallery/listing.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="../gallery/listing.php" class="small-box-footer">More info <i
+                class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -123,6 +132,6 @@ include("../inc/leftnav.php");
 
 <?php
 
-include("../inc/footer.php")
+include ("../inc/footer.php")
 
-?>
+  ?>

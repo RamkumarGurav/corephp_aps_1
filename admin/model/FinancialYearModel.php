@@ -9,13 +9,14 @@ class FinancialYearModel
 
   private $conn;
 
-  public $table_name = "year";
+  public $table_name = "aps_years";
 
   public function __construct()
   {
     $path = substr(str_replace("\\", "/", dirname(__DIR__)), 0, -6);
 
-    $this->conn = require $path . "/config.php";;
+    $this->conn = require $path . "/config.php";
+    ;
   }
 
   public function findOneByColumnName($columnName, $columnValue)
@@ -65,7 +66,7 @@ class FinancialYearModel
   }
 
 
-  public  function createOne($data)
+  public function createOne($data)
   {
 
 

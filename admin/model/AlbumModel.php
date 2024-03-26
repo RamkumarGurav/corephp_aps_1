@@ -9,13 +9,14 @@ class AlbumModel
 
   private $conn;
 
-  public $table_name = "album";
+  public $table_name = "aps_albums";
 
   public function __construct()
   {
     $path = substr(str_replace("\\", "/", dirname(__DIR__)), 0, -6);
 
-    $this->conn = require $path . "/config.php";;
+    $this->conn = require $path . "/config.php";
+    ;
   }
 
   public function findOneByColumnName($columnName, $columnValue)
@@ -76,7 +77,7 @@ class AlbumModel
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (count($data) > 0) {
-      return   $data;
+      return $data;
     } else {
       return false;
     }
@@ -92,7 +93,7 @@ class AlbumModel
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (count($data) > 0) {
-      return   $data;
+      return $data;
     } else {
       return false;
     }
@@ -168,7 +169,7 @@ class AlbumModel
     // Iterate over the new order of album IDs
     foreach ($ablumIdsArr as $i => $album_id) {
       // Update the order of the album with the corresponding order from $orderArr
-      $album_order = isset($orderArr[$i]) ? $orderArr[$i] : null;
+      $album_order = isset ($orderArr[$i]) ? $orderArr[$i] : null;
       if ($album_order !== null) {
         $sql = "UPDATE {$this->table_name} SET album_order=$album_order WHERE id=$album_id";
         echo "  $sql <br>";

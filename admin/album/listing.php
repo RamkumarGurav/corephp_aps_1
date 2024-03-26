@@ -128,7 +128,9 @@ include("../inc/leftnav.php");
                     </td>
 
                     <td class="align-middle text-center"><?php echo $album['fy_name'] ?></td>
-                    <td class="align-middle text-center"><?php echo $album['status'] == 1 ? 'Active' : 'Blocked'; ?>
+                    <td class="align-middle text-center">
+                      <?php echo $album['status'] == 1 ? 
+                  '<div class="badge badge-sm bg-success">Active</div>' : '<div class="badge badge-sm bg-danger">blocked</div>'; ?>
                     </td>
                   </tr>
                   <?php endforeach; ?>

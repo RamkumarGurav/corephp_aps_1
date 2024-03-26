@@ -10,7 +10,8 @@ class Login
 {
   public function doLogin($email, $password)
   {
-    $password = md5($password);
+    // $password = md5($password);
+
 
 
     $model = new LoginModel();
@@ -22,7 +23,7 @@ class Login
       session_start();
       // $error_msg = "Invalid email or password. Please try again.";
       $_SESSION["toast_message"] = "Invalid email or password. Please try again.";
-      $_SESSION["toast_type"] = "text-bg-danger";
+      $_SESSION["toast_type"] = "alert-danger";
 
       global $base_url;
       // Redirect the user to the welcome page after successfully adding album photos

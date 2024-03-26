@@ -756,3 +756,8 @@ if (isset($_REQUEST['action']) and $_REQUEST['action'] == "updateSortedRows") {
   $album_controller->reorderAlbumsByYearId($newOrder, $year_id);
 }
 //--------------------------------------------------}
+
+
+//{------------API----------------
+
+  
